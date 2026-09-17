@@ -1,0 +1,149 @@
+A PRE-INTERNET MEMORY - USER OBSERVATION AND REVISION REPORT
+Nikki Quinn
+
+===============================================================================
+SECTION 1: INTERVIEW FEEDBACK
+===============================================================================
+
+*** FILL THIS IN AFTER YOU RUN THE OBSERVATION. Notes below are prompts, not
+*** findings. Delete every prompt line before you submit.
+
+WHO (general description only - no name, no unnecessary personal detail):
+  - Where you approached them (cafe, library, common room):
+  - Their general comfort with websites (rarely / daily / builds them):
+  - Device they used and whether sound was on or off:
+  - Confirm you asked consent before showing them the site:
+
+WHAT YOU OBSERVED (silent observation - no explaining, no hinting):
+  - First thing their eyes went to:
+  - First thing they clicked:
+  - Did they press play on the audio? Unprompted, or not at all?
+  - Did they discover the four clickable thoughts and the iframe?
+    If so, did they click all four, or stop after one?
+  - Did they notice the faded "effectively disappear" line?
+  - Did they use the "Jump to a section" links, or just scroll?
+  - Where did they slow down or re-read?
+  - Where did they scroll fast or skim?
+  - How long did they stay on the page overall?
+  - Did they reach the photos at the bottom?
+  - Anything they did that you did not expect:
+
+Q&A AFTERWARD (ask open questions, do not lead):
+  - "What was this about, in your own words?"
+  - "What do you remember most?"
+  - "Was there anything you weren't sure how to use?"
+  - "Was there anything you didn't notice until late?"
+  - "What did it make you feel, if anything?"
+  - "Did the sound change how it felt?"
+
+WHAT SEEMED SUCCESSFUL:
+
+WHAT SEEMED CONFUSING OR UNSUCCESSFUL:
+
+WHAT SURPRISED YOU:
+
+WHAT THEY TOOK AWAY (feeling and message):
+
+
+===============================================================================
+SECTION 2: REVISIONS
+===============================================================================
+
+This version (story-v3) revises the previous version (story-v2). Both earlier
+versions are preserved: version one and version two are included in this folder
+as previous-version-1.html and previous-version-2.html, and are linked at the
+bottom of the page so the progression can be traced.
+
+--- ACCESSIBILITY: COLOR CONTRAST ---
+
+I audited every text color in the page against the background (#0d0f12) using
+the WCAG contrast formula. Three colors failed the AA standard of 4.5:1 for
+normal text, so I corrected them:
+
+   ELEMENT                 BEFORE            AFTER
+   captions, small text    #6f7880 4.27:1    #8a939b 6.15:1
+   red story beats, links  #c1554a 4.26:1    #cf6355 5.09:1
+   table and box borders   #242a31 1.33:1    #5a6672 3.27:1
+
+The red is the color carrying the emotional weight of the story, so it mattered
+that it be legible rather than merely atmospheric. The new red is slightly
+brighter but reads as the same color, and it now passes AA at normal text size.
+Border contrast matters because the table borders are what separate one row of
+data from the next.
+
+--- ACCESSIBILITY: NOT RELYING ON COLOR ALONE ---
+
+Links were previously distinguished from body text only by being red. Anyone
+with a red-green color vision deficiency would not reliably see them as links.
+All links are now underlined as well as colored.
+
+--- ACCESSIBILITY: HEADING STRUCTURE ---
+
+The three dramatic lines ("Her friend did not show up.", "Instead, she knew
+absolutely nothing.", "No answer.") were marked up as <h3> headings purely
+because I wanted them to look large and red. They are not section headings,
+and a screen reader user navigating the page by heading would have heard them
+announced as structural landmarks, which is misleading. They are now ordinary
+paragraphs with a .beat class, so they look exactly the same but no longer
+pollute the heading outline. The page now has one <h1> and six <h2> section
+headings, in order, with nothing skipped.
+
+--- ACCESSIBILITY: KEYBOARD ACCESS ---
+
+1. Added a "Skip to the story" link as the first focusable element. It is
+   hidden until focused, and lets a keyboard user jump past the audio player
+   and the section-jump links straight into the narrative.
+2. Added a visible yellow focus outline to every link, the audio player, and
+   the iframe. Previously a keyboard user had no reliable indication of where
+   they were on the page.
+3. The faded "effectively disappear" line previously revealed itself only on
+   mouse hover, which made it mouse-only content. It now also reveals on
+   keyboard focus, and carries a title attribute.
+
+--- ACCESSIBILITY: THE FADED LINE ---
+
+The line "effectively disappear" is deliberately set at 1.95:1 contrast so that
+it nearly vanishes into the background. This intentionally fails WCAG. I kept
+the effect because the disappearance IS the meaning of that sentence, but I
+mitigated it three ways: the text is fully present in the markup, so a screen
+reader reads it normally; it reveals on both hover and keyboard focus; and I
+added a visible caption underneath telling the reader the line is faded on
+purpose and how to read it. A reader can no longer miss it without being told
+it is there.
+
+--- ACCESSIBILITY: TABLE AND MEDIA SEMANTICS ---
+
+- Added scope="col" to both table headers so screen readers associate each
+  data cell with the correct column.
+- The audio caption now states that the music is optional and that the story
+  reads the same with sound off, so the page does not depend on audio.
+- The audio caption already made clear the track is atmospheric music and not
+  a recording of my grandmother, which avoids a misleading impression.
+- Both images carry descriptive alt text, plus width and height.
+- The iframe has a title attribute describing its purpose.
+
+--- READABILITY ---
+
+Raised the base font size from 19px to 20px and set line-height to 1.7. The
+previous version had no line-height at all, so paragraphs rendered tightly.
+
+--- CLARITY OF INTERACTION ---
+
+The iframe is the one part of the page a visitor has to figure out on their
+own. I strengthened its instruction from "Click a thought." to explicitly
+saying that clicking opens the thought in the box underneath, and that the
+thoughts get worse in order from left to right. I also labeled the section
+links with "Jump to a section:" so their purpose is stated rather than implied.
+
+--- WHAT I WOULD DO NEXT WITH MORE TIME ---
+
+- Make the layout respond properly to narrow phone screens. It currently uses
+  a fixed maximum width, which is acceptable but not genuinely responsive.
+- Offer a light-background version, since a dark page is harder to read for
+  some people with astigmatism.
+- Give the four "thoughts" a visual indication of which one is currently open,
+  so a visitor can tell where they are in the sequence.
+- Replace the fixed pixel image widths with relative sizing so the photos
+  scale on small screens.
+
+===============================================================================

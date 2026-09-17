@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Pre-Internet Memory</title>
+
+  <!-- Favicon: a red "R" for Roddy, made to match the colors of the page. -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Internal style sheet. Colors are written as HEX, with one RGB and one
+       HSL value below so I could try all three formats from HTML Colors. -->
+  <style>
+
+    /* Lets a keyboard user jump straight past the audio and contents. */
+    .skip {
+      position: absolute;
+      left: -9999px;
+      background-color: #cf6355;
+      color: #0d0f12;
+      padding: 10px 16px;
+      font-weight: bold;
+    }
+
+    .skip:focus {
+      position: static;
+      display: inline-block;
+    }
+
+    /* A visible outline on every keyboard-focused control. */
+    a:focus,
+    audio:focus,
+    iframe:focus,
+    #vanishing:focus {
+      outline: 3px solid #e8c05a;
+      outline-offset: 2px;
+    }
+
+    body {
+      background-color: #0d0f12;
+      color: #d7d3cb;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* The whole story sits in one centered column. */
+    #page {
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 55px 25px;
+    }
+
+    h1 {
+      color: #e9e5dd;
+      font-size: 44px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      color: rgb(153, 160, 168);
+      font-size: 15px;
+      letter-spacing: 3px;
+      text-align: center;
+      margin-top: 45px;
+      margin-bottom: 30px;
+    }
+
+    /* The three moments of fear. Red is used ONLY here. */
+    .beat {
+      color: #cf6355;
+      font-size: 30px;
+      text-align: center;
+      margin-top: 45px;
+      margin-bottom: 45px;
+    }
+
+    hr {
+      border: 1px solid #5a6672;
+      margin-top: 45px;
+      margin-bottom: 45px;
+    }
+
+    a {
+      color: #cf6355;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #e9e5dd;
+    }
+
+    blockquote {
+      color: #99a0a8;
+      border-left: 2px solid #cf6355;
+      padding-left: 20px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    /* ----- the waiting staircase ----- */
+    .step-1 {
+      color: #99a0a8;
+      text-align: left;
+    }
+
+    .step-2 {
+      color: #99a0a8;
+      text-align: center;
+    }
+
+    .step-3 {
+      color: #99a0a8;
+      text-align: right;
+      margin-bottom: 40px;
+    }
+
+    /* ----- everything she could not do ----- */
+    .undone {
+      color: #8a939b;
+      text-align: center;
+    }
+
+    /* The worst thought, small and pushed to the edge of the page. */
+    .intrusive {
+      color: #cf6355;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .caption {
+      color: #8a939b;
+      font-size: 15px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* Almost the same color as the background, so the words nearly vanish.
+       Hovering brings them back. */
+    #vanishing {
+      color: hsl(215, 14%, 27%);
+      text-align: center;
+    }
+
+    #vanishing:hover,
+    #vanishing:focus {
+      color: #d7d3cb;
+    }
+
+    /* ----- table ----- */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    caption {
+      color: #99a0a8;
+      font-size: 15px;
+      letter-spacing: 2px;
+      padding-bottom: 14px;
+    }
+
+    th {
+      background-color: #171b21;
+      color: #d7d3cb;
+      border: 1px solid #5a6672;
+      padding: 10px;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    td {
+      border: 1px solid #5a6672;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .nothing {
+      color: #cf6355;
+    }
+
+    /* ----- lists ----- */
+    ol {
+      color: #d7d3cb;
+    }
+
+    li {
+      padding-bottom: 8px;
+    }
+
+    /* ----- media ----- */
+    img {
+      border: 1px solid #5a6672;
+      margin-top: 20px;
+    }
+
+    audio {
+      width: 100%;
+    }
+
+    iframe {
+      border: 1px solid #5a6672;
+      background-color: #0d0f12;
+      width: 100%;
+      height: 180px;
+    }
+
+    .media-box {
+      background-color: #12151a;
+      border: 1px solid #5a6672;
+      padding: 20px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer {
+      color: #8a939b;
+      font-size: 15px;
+      text-align: center;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<a class="skip" href="#plan">Skip to the story</a>
+
+<div id="page">
+
+  <!-- ============ TITLE ============ -->
+
+  <h1>A Pre-Internet Memory</h1>
+  <p class="caption">A story my grandmother told me &mdash; and the hour she has never forgotten.</p>
+
+  <!-- ============ MEDIA 1: AUDIO ============ -->
+
+  <div class="media-box">
+    <p class="caption">
+      Optional background music. Press play, then read. This is the sound of the hour
+      she waited &mdash; the story reads the same with the sound off.
+    </p>
+    <audio controls loop src="eerie-background.mp3">
+      Your browser does not support the audio element.
+    </audio>
+    <p class="caption">
+      Music: <em>Eerie Horror Cinematic Background</em> by Universfield.
+      This is not a recording of Roddy &mdash; it is the feeling of the story.
+    </p>
+  </div>
+
+  <!-- ============ CONTENTS (links to id bookmarks) ============ -->
+
+  <p class="caption">Jump to a section:</p>
+
+  <p class="center">
+    <a href="#plan">The Plan</a> &middot;
+    <a href="#waiting">The Waiting</a> &middot;
+    <a href="#payphone">The Pay Phone</a> &middot;
+    <a href="#appeared">She Appeared</a> &middot;
+    <a href="#stayed">What Stayed With Me</a> &middot;
+    <a href="#roddy">Roddy</a>
+  </p>
+
+  <hr>
+
+  <p>
+    My grandma, Roddy, is <strong>78 years old</strong> now, which means she grew up long
+    before cell phones, GPS, or the internet became part of everyday life. When I asked her
+    what she remembered most about living without that technology, she told me about one
+    night when the inability to contact someone stopped feeling normal and became
+    <em>terrifying</em>.
+  </p>
+
+  <hr>
+
+  <!-- ============ I. THE PLAN ============ -->
+
+  <h2 id="plan">I &middot; AN ORDINARY PLAN</h2>
+
+  <p>
+    Roddy was a teenager at the time and had made plans to meet a friend in town. Like most
+    plans then, everything had been decided beforehand: where they would meet, what time they
+    would arrive, and roughly when they would be home. Once Roddy left the house,
+    <strong>there was no way for anyone to reach her.</strong>
+  </p>
+
+  <p>
+    At first, nothing seemed unusual. Roddy arrived at their meeting place and waited.
+  </p>
+
+  <p class="beat">Her friend did not show up.</p>
+
+  <hr>
+
+  <!-- ============ II. THE WAITING ============ -->
+
+  <h2 id="waiting">II &middot; THE WAITING</h2>
+
+  <p class="step-1">Ten minutes passed.</p>
+  <p class="step-2">Then twenty.</p>
+  <p class="step-3">Then almost an hour.</p>
+
+  <p>
+    Today, Roddy could have pulled out her phone. She could have sent a text, checked her
+    friend&rsquo;s location, called her parents, or looked online to see whether there had
+    been an accident nearby.
+  </p>
+
+  <p class="undone">
+    <del>Send a text.</del><br>
+    <del>Check her location.</del><br>
+    <del>Call her parents.</del><br>
+    <del>Search for an accident nearby.</del>
+  </p>
+
+  <p class="beat">Instead, she knew absolutely nothing.</p>
+
+  <!-- ============ MEDIA 2: IFRAME ============ -->
+  <!-- The links below load different pages into the iframe. Clicking through
+       them is meant to feel like the way her mind cycled through possibilities. -->
+
+  <div class="media-box">
+    <p class="caption">
+      What was going through her head. <strong>Click each thought below</strong> and it
+      will open in the box underneath. They get worse in order, left to right.
+    </p>
+
+    <p class="center">
+      <a href="possibility-forgot.html" target="thoughts">She forgot</a> &middot;
+      <a href="possibility-late.html" target="thoughts">She is late</a> &middot;
+      <a href="possibility-car.html" target="thoughts">The car broke down</a> &middot;
+      <a href="possibility-worst.html" target="thoughts">Something terrible</a>
+    </p>
+
+    <iframe src="possibility-waiting.html" name="thoughts" title="The possibilities Roddy imagined while she waited">
+    </iframe>
+  </div>
+
+  <p>
+    The longer she waited, the worse the possibilities became.
+  </p>
+
+  <p class="intrusive">Or maybe something terrible had happened.</p>
+
+  <p>
+    Roddy remembers reaching the point where annoyance turned into fear. Every unfamiliar car
+    made her look up. Every passing minute made the silence feel heavier. She had no way to
+    tell whether her friend was ten minutes away or lying injured somewhere on the side of
+    the road.
+  </p>
+
+  <hr>
+
+  <!-- ============ III. THE PAY PHONE ============ -->
+
+  <h2 id="payphone">III &middot; THE PAY PHONE</h2>
+
+  <p>
+    Eventually, Roddy found a pay phone and called her friend&rsquo;s house.
+  </p>
+
+  <p class="beat">No answer.</p>
+
+  <p>
+    That was the moment she remembers feeling <strong>truly horrified</strong>.
+  </p>
+
+  <p>
+    There was no next step. There was no second number to call. There was no location to
+    check. Her friend was simply <em>somewhere in the world</em>, and Roddy had no way of
+    knowing where.
+  </p>
+
+  <!-- A table showing the same hour with and without a phone. -->
+
+  <table>
+    <caption>THE SAME HOUR, THEN AND NOW</caption>
+    <tr>
+      <th scope="col">If this happened to me today</th>
+      <th scope="col">What Roddy actually had</th>
+    </tr>
+    <tr>
+      <td>Send a text</td>
+      <td class="nothing">Nothing</td>
+    </tr>
+    <tr>
+      <td>Check her location</td>
+      <td class="nothing">Nothing</td>
+    </tr>
+    <tr>
+      <td>Call her cell phone</td>
+      <td>One pay phone, one home number</td>
+    </tr>
+    <tr>
+      <td>Message a mutual friend</td>
+      <td class="nothing">Nothing</td>
+    </tr>
+    <tr>
+      <td>Search for an accident nearby</td>
+      <td class="nothing">Nothing</td>
+    </tr>
+  </table>
+
+  <p>
+    She called home next and told her parents what was happening. All they could tell her
+    was this:
+  </p>
+
+  <blockquote>
+    <p>Stay where you are and wait.</p>
+  </blockquote>
+
+  <p class="center">So she did.</p>
+
+  <hr>
+
+  <!-- ============ IV. SHE APPEARED ============ -->
+
+  <h2 id="appeared">IV &middot; SHE APPEARED</h2>
+
+  <p>
+    Eventually, her friend appeared. She had gotten turned around on the way there and had
+    stopped to ask someone for directions. She was embarrassed and apologetic, completely
+    unaware of how frightening the delay had become.
+  </p>
+
+  <p class="center"><strong>Nothing terrible had happened.</strong></p>
+
+  <p>
+    But Roddy still remembers the feeling of those minutes before she knew that.
+  </p>
+
+  <!-- The whole night in order, start to finish. -->
+
+  <p class="caption">THE NIGHT, IN ORDER</p>
+
+  <ol>
+    <li>The plan is made in person: a place, a time, a rough hour to be home.</li>
+    <li>Roddy leaves the house. From this moment, no one can reach her.</li>
+    <li>She arrives at the meeting place and waits.</li>
+    <li>Ten minutes. Then twenty. Then almost an hour.</li>
+    <li>She finds a pay phone and calls her friend&rsquo;s house. No answer.</li>
+    <li>She calls home. Her parents tell her to stay where she is.</li>
+    <li>Her friend appears, lost and apologetic, with no idea what the hour was like.</li>
+  </ol>
+
+  <hr>
+
+  <!-- ============ V. WHAT STAYED WITH ME ============ -->
+
+  <h2 id="stayed">V &middot; WHAT STAYED WITH ME</h2>
+
+  <p>
+    What struck me most about her story was not simply that communication used to be slower.
+    It was <strong>how much uncertainty people had to tolerate</strong>. Today, we are
+    accustomed to knowing where people are. A delayed text or unanswered call can make us
+    nervous, but there are usually other ways to find information.
+  </p>
+
+  <p>
+    For Roddy, there were moments when there was simply <em>no information at all</em>.
+  </p>
+
+  <p class="center">Someone could leave the house and, for hours,</p>
+
+  <p id="vanishing" tabindex="0" title="effectively disappear">effectively disappear.</p>
+  <p class="caption">(The line above is faded on purpose. Hover over it, or press Tab, to read it.)</p>
+
+  <p>
+    Growing up with cell phones, I find that idea almost <strong>horrifying</strong> on its
+    own. I am used to thinking of communication as immediate and constant. Roddy grew up in a
+    world where sometimes the only thing you could do was stand in one place, imagine every
+    possibility, and wait for someone to appear.
+  </p>
+
+  <hr>
+
+  <!-- ============ VI. RODDY (MEDIA 3: IMAGES) ============ -->
+
+  <h2 id="roddy">VI &middot; RODDY</h2>
+
+  <p>
+    This is the grandmother in the story. She is the reason I know it at all &mdash; and the
+    reason I will never quite be able to imagine standing on a corner for an hour with
+    <em>no way to know anything</em>.
+  </p>
+
+  <div class="center">
+    <img src="roddy-baking.jpg" alt="Roddy and me as a young girl in her kitchen, both holding up hands covered in flour and dough, laughing." width="630" height="473">
+    <p class="caption">Roddy taught me to make biscuits before she ever told me this story.</p>
+  </div>
+
+  <div class="center">
+    <img src="roddy-and-me.jpg" alt="Roddy and me sitting together at an outdoor cafe table under a yellow umbrella, smiling at the camera with iced drinks in front of us." width="630" height="473">
+    <p class="caption">The two of us now &mdash; the afternoon she told me about the night she waited.</p>
+  </div>
+
+  <hr>
+
+  <p class="center">
+    Earlier versions of this page:
+    <a href="previous-version-1.html">version one</a> &middot;
+    <a href="previous-version-2.html">version two</a>
+  </p>
+
+  <p class="footer">
+    Told by Roddy, age 78. Written down by her granddaughter.
+  </p>
+
+</div>
+
+</body>
+
+</html>

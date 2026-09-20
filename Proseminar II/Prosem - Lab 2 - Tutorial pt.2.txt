@@ -1,0 +1,392 @@
+Tutorial pt.2
+Hi everyone. Uh I've got a brand new scene here. Um but this is going to be the second tutorial for uh for lab 2 for
+trouble with tribles. Um I'm going to try to do this uh as efficiently as I can. I wanted to introduce you all to a
+different way to combine objects, especially your photoggramometry objects, which really wasn't in that
+previous um video. Um, so I'm going to go to um make sure when you open up
+it'll be in object mode. I'm going to make sure that we're in the correct uh project. So I'm going to go and set my
+project. Um, and what I'll I want to do is uh go into
+for you all. You'll see basically these um and your project. Mine is called
+this. yours is going to be called something like for instance
+something like that. Okay. Shared Houdini Prom2. Um so for me this is and
+I'll know that it's the right one because it's got these um uh these subfolders. You won't have all
+of these subfolders. I just accidentally added all of them. But you'll probably have you'll have texture and you'll have
+geo and HDA and stuff like that. So it's fine. We'll hit accept. Um, and then
+really quickly, I'm just going to go and save my
+um, we're going to say BDB bodies. So, if I'm in dollar job, then I'm in it's
+going to go directly to my project folder. And I'll call this turbles VDB.
+And I'm telling myself that this is for the video.
+Good. Um, so we begin as we've done before. We're going to start with a tab key and type geometry. So go.
+Click that, drop it on, and then doubleclick. And when you're in here, you have different um tools. You're
+going to hit tab and just drop down a file node. File L. Here it is. Um, if we
+go to our picker, I'm going to pick uh two objects. I'm going to go to job and then I put this this is in all of yours
+as well. You won't have the subfolder called OBJ files. It'll just you'll just see this. Um I'm going to put two
+objects in here. I think I want the antelope object. Make sure it's OBJ there. Otherwise,
+it'll just put the texture because there's textures and stuff in here, too. Um just make sure it's the OBJ. And I'll
+hit accept. And I'll hit spacebar. Move over here. Spacebar H.
+and we'll kind of revolve around this. And you can see it has UVWs. I don't really need to
+visualize those, so I'll turn that off. Um, but you know, you can see it's got a lot of detail. I'm visualizing this
+smooth wire shaded. If I just go to smooth shaded, you'll see looks about like that. Um, I'm going to keep it on
+smooth wire shaded just so you all see everything.
+Um, and I'm just going to call this antelope.
+And then I'm just going to drop another file node and I'm going to try to combine it with something else.
+And this one I'll combine with the
+let's put it with the pulley figure. And again, making sure when you pull this out that it's the object. Um that's the
+that's the thing that we're looking for. And we'll hit accept.
+And this one is pulley.
+We'll visualize the pulley. There it is. Okay. It's It's a little bit higher resolution. You can kind of see that. Um
+what we're going to do now is um very quickly
+we're going to say BDB
+from polygons and drop that in. And let's
+start with the antelope. I'll have you all look at this and it'll be quite ugly
+when we just use the default values. It's turning them into volumes, but the
+resolution is terrible. Um, so we're a small object, so I'm just going to make
+this 0001. Okay. So, now we're we're essentially at the at the millimeter scale there. Um,
+if I push this down even further, you'll see that there's yet more
+um detail to be had. Um, I'm going to keep it here just so that it's a little
+bit easier to it's a little bit less heavy um to deal with. Um, so since
+that's already set, I'm going to go ctrl +v.
+And we're just going to wire this one in there. And it has the same
+uh resolution. So from there, I'm going to add a transform node
+to both of these so that we can move them after they've
+been converted and we can scale them and that kind of thing.
+Okay. So, we'll see like a kind of a cool trick here. So, I'm going to do a
+BDB combine because we're going to combine the two objects and I'm going to wire one and two. And
+we're going to combine the two like this. and our operation let's switch
+that to let's do S df
+union and that is what we get. Um now these
+objects if I grab one of them
+I'm going to select the transform node just in the middle there and hit enter and that gives me this little you know
+thing here. Okay, maybe I'll leave that one in place and I'll put like the
+Let's switch it over to this one. And maybe I'll move the antler
+and maybe rotate it up a little bit. Like let's rotate it back
+and, you know,
+make sure I grab the right handle there. I'm going to grab this little red square
+and just move that forward. So, I'm moving it just in the um Z and the Y.
+And we could have this thing. And I can, you know, like shrink it down.
+And maybe I'll pull it back up a little bit.
+Okay. and just kind of get it so that you know
+maybe it's like maybe it's a headdress like this.
+What you're seeing if I zoom in here is when I convert this back, what's nice about it is the polygons will accept all
+of this, you know, nice clear union stuff. Um, and
+maybe I'll just move it over here. Something like this. It's roughly in place. Um,
+think it's needs to rotate just a bit. I'm being a little too precious with
+this. Okay. So, it's it's roughly in in a in a spot I'm okay
+with. I'm all right with it. Um, but I've also got like some stuff in here I
+don't really want. Um, so like let me show you what happens when we convert this.
+Convert VDB. We're going to turn this back into a mesh. Let's just have a
+look. Instead of a volume, we're going to keep it as polygons.
+And you can see it's created this nice mesh. everything kind of pulls together
+nice and clean. Um, you can also do the BDB smooth
+in between there and just, you know,
+maybe up our radius a little bit. And now you're starting to see that, you know, it's going to make it muddy, but
+at the same time, it's going to it's going to kind of clean some things up to make them all look like they they've
+always belonged. So, you can do that. I'll I'll show you kind of before and after, right? It's doing a lot, you
+know, any any smoothing technique, be skeptical of that. Um, so that's just something to to keep in mind. Um, I'm
+going to um show you another trick, which is what if we want to just separate out like
+let's say the head of that and I want to like cut that object off. There's two
+methods for the um the rope. What I think I'll do on the pulley is I'm gonna
+I'm gonna select all of that stuff and just try to erase it with an attribute
+and then what's called a blast by attribute. Um so we're going to do an attribute paint
+which you all did before um in order to identify a place to so I'll turn this
+one on. Um you're you did that to identify a place to copy points to. So
+uh we're going to hit control and shift and uh
+and middle. Let's see. Control shift and left
+to shrink the brush size down. That's much better. And I'm just gonna start
+painting this up. And we're gonna get rid of all this stuff.
+Okay, that's that's pretty good. Um I've got it about what I how I want it. Um
+instead of mask, I'm going to change this attribute its name and call this rope.
+So I painted rope on all of that. Again, if we want to check the geometry spreadsheet,
+we have one for rope and some other values for rope. It'll it'll delete
+anything um in there, any of the points um that have been selected
+um that have any value above zero. So, I'm going to hit tab and say blast
+by attribute. I'll drop that in. Um, I'm going to run
+over rope. And you can see it's blasted out the
+rope. If you wanted to do this kind of the opposite way, you could also do that. Um, you could invert it and say I
+only want to keep the rope. Um, like so if you only wanted to select like the head of the antelope or something like that and then put that over here, that's
+something that you could do. Um, so I'll turn that off. And there's there's some
+badness in here. So, let me go back to my attribute paint briefly here.
+And going to turn that back on
+and see if I can clean this up with a small brush here.
+Just to make sure there's no like purple anywhere in here. It's really all I'm
+doing. Get way in here.
+And we're going to hold down control and make sure none of that's in there. and
+just try to imagine a a good scene here. Um, and then you can you can preview it
+um with the blast. And you can see like what's going to be kept and what's not.
+Um, you know, I might, you know, clean that up a little bit.
+And you can see it'll probably be a little bit easier. I might even just include this. Might as well.
+Get all that in there. And you can see the white ones are the ones that are being kept.
+This is actually just like a, you know, I know I said I was just going to pause and then come back, but this is a a good
+technique for you all to learn for doing selections
+and just kind of cleaning up those polygons. And again, you can just get so crazy about this that you're just like
+spend too much time on it. Um, it'll never be perfect.
+Perfect is the enemy of the good, right? Um, so here we are with blast by attribute. We've now made a hole. The
+problem is you can't really create BDBs. You'll I'll show you what happens. The BDBs become a total mess if you're not a
+watertight mesh, which means it can't have any holes. Um, so what we want to do is a couple of things to clean it up.
+First one that you need is a a fuse node. And that's just if I drop this in,
+you'll see what it's going to do. Um, so it's going to go and just fuse nearby um points.
+You don't need to be that aggressive with it. I'm just going to say anything that's like super close to each other.
+Let's do that. And then hopefully, if we're lucky, we can just drop what's called a polyfill
+um back on here.
+And I'll turn that on. And you know, that's made some pretty ugly. And it did not close all of the
+holes. So, let's see what we got here.
+Odd number of edges. change the fill mode. So, yeah, let's try
+instead of quads, let's just do triangles. And that's going to be super blunt. Um,
+I'm going to be putting a headdress over that. Like, I could,
+you know, we could we could do a lot with this to clean it up, but I just want to test my BDBs. Look, they're
+fine. Um, again, we're going to be covering this
+up anyway, so let's let's not get too crazy about it. Um, like if you watch the way that it looks when by the time
+you get all the way converted that you're not going to really notice too much of that. So, let's go. Um, the
+other thing is I don't necessarily want all of this. Let's just cut the head off. Um, and that's another technique
+I'd like to show you guys just the the clip tool. um and see if that is good
+enough for us. I'm going to go to clip
+and we're going to do that in a procedural way. So,
+we want that clip to be before we convert it to polygons. There we go.
+Okay. So, here's our clip node. It's slicing by default that way. Uh what we
+want to do is change the direction. So not facing
+in that um you know positive x is like the direction that's being kept above
+the plane. So kind of weirdly it's like it's not pointing in any of these directions. It's it's what it's
+referring to is the normal of that plane which is like straight out. We're going to go zero and then we're going to cut
+off at the Yeah. Why don't we cut it off at the Z
+and just then we can we can rotate back
+and get this into place.
+I grabbed the wrong thing. There we go. I'm just going to grab that little square right there.
+And it won't be perfect. Um, but you want to keep it pretty clean.
+So, I don't know that it's really going to help me to rotate here like this.
+It would be great if we could just do it super simple that way. Yeah, looks like it's mostly going to work. And I You see
+how it's creating? I'm just trying to avoid that little like chin. So, that's pretty good. And I'm just
+going to keep those holes. Like you could go back and deal with this, but that makes a nice clean setup for you.
+And we can then add fill polygons along the clipping plane
+and see if it automatically fills for us. It does not. So, we just have to um
+I can uncheck it because it's doing nothing. Um I'm going to hit another fuse node to clean up. It just it's a
+hard thing to kind of explain here, but um the reason for this is just when you
+have photoggramometry models, sometimes things get a little bit strange. That's really all I can put it where there's like doubled objects and some things
+like that. Um and then once you've kind of changed this to be pretty small, um
+so that points that are really close to each other will like glue together. Um
+then you can go to polycap
+which is renamed polyfill now just to make sure everyone's confused and that's
+pretty good. Okay. So what so now we have um
+we have a head and we have pulley and we'll look at this combine. And now
+they're not touching anymore but that's okay. We can always go back to our transform here
+and I can move let's rotate it a bit
+and just get it into place.
+So that's kind of set. We could like make copies of the the head and put them in other places. Um I want to show you
+something different. Um, first here, uh, one thing I want to do is go up to our
+BDBs and I'm going to make this much simpler.
+So, look bit like this. Let's make it uh,
+let's say something like like a five or something like that. Yeah, that's better. Um, and this can be
+Something like this. Oh, sorry. Five.
+Good. Better. Okay. Here. And here. We'll simplify these a bit. Um because I wanted to show you um you've got this
+combine here. And what I'll do, I think I'm going to scale up.
+Let's actually scale up that antelope headed a bit.
+Good deal. Okay. And we still have the ability to do this
+transform, but it's going to move a little bit faster this way. And you can kind of see what's happening
+as you're trying to get these things to fit in. But like what if you want it to stand out about like this? And you want
+to you want to just sort of glue it on there. There's a cool technique that
+uses a handful of nodes that we haven't seen yet. So, here's VDB.
+Oh, sorry. EDB and we're looking for
+where are we? Reshape. What we're going to do is we're going to
+make these things um by default the thing it says is dilate.
+Okay. So
+let's have a look at what happened there. Okay, that's actually pretty useful. Um
+didn't realize what I'd done there. The transform must have uniform scale. So, the fact that I had this transform on
+the opposite end of the BDBs, let's put them so that we're transforming the
+polygons before we get to the VDBs and then they're going to stay the same size. Um, so what I'm doing is I'm
+clicking down here on this reshape and we're just looking at how much do we need to reshape it
+um until these things touch each other. Um, and this is going to make it muddy,
+just FYI. Um, it will uh it will do that.
+Okay. So, we're um we're dilating this kind of up and back.
+Um, what we want to do is just make these things touch. And
+I think that's going to be that's going to be kind of close.
+So just make these things touch in a way where we know what's going on. So that's dilating. And then if we go back to
+uh BDP reshape.
+There we go. We're going to take this number, the offset. I'm going to copy
+that. And instead of dilate, we're going to erode it. And I'm going to paste that
+back in. And now what it's going to do is kind of
+go up and back. So if I take this up,
+keep pushing this up so that in the end it's going to kind of push these things
+back together. And you're kind of watching it do this like melding move like this is fun to animate down the
+down the line. Like you all can play with that. Um, I think we've probably got our VDBs a little bit too small. Um,
+so let's do our voxil size at like like two
+and two for each of those. And then maybe we're
+just a little bit too close. So, let's move. What's cool about this is like
+with that visualiz you can just kind of see it just going blue. um and it'll like stick on there. Now, of course,
+when you do this, you're losing data. So, um you know,
+there's going to be some funny stuff and you're going to need to go back into the details to see, okay, what do I need to
+do up here? What happens if I go back to one? It gets less the less goopy it
+gets, um you know, the less likely that that's going to kind of come together exactly the way you want it. But it's
+still kind of cool. And if we go back to that transform again, you could maybe
+just kind of do something with more like that.
+And you could be, you know, you could be happy with that. Um, if you so choose to
+be. Um, it's it's still a little gooey, but I just wanted to show you all that as a as a an option. Um, if you wanted
+to kind of animate stuff like this. Um, the problem is it really just simply doesn't work if you've got a really
+small object and it's got a lot of fine detail. It just it starts to get a
+little bit uh yeah, just a little bit pnikity about that. But we'll leave we'll leave that there. So, you've seen
+a few different things that you can do here. Um, I'm going to add a null node
+down here. And that doesn't do anything. It just let gives us an opportunity to label it.
+And we're going to call this um out um fully
+horns fully uh with
+antelope. Perfect. Uh what I want to show you all
+next is that if you open up another file, you can just select all of this stuff. Like I'm going to save this
+really quick. Um, but you can also just save this like just select everything um
+save it and especially if you used these um relative paths, then you can just
+paste it into another project in the same um another uh sorry another scene
+in the same project um and it will it will not break these links. Um so you'll
+you'll be able to push that in there. So, let me demonstrate that um just very
+quickly here if we can um go to the Houdini launcher.
+Make sure going to launch 3 68 here.
+And okay, uh what we want to do is let's open up that
+So, instead of recent files, I'll do this really quick.
+I'm going to be in here.
+Let's open this one up.
+So, this is a this is a file that you all have access to. Um, it has this um
+pretty elaborate um scene setup, it will by default go to stage. Um or if
+it doesn't, you know, or if it does, you can just switch it over to OBJ, which I just did. Um so that's just the object
+level. Um I wanted to show you all what you can do. So I've got this open, and
+over here, if you look at these, um sticky notes, um they kind of tell you
+what you can do. So, it says optional scan body parts. Like this is a placeholder, that's a placeholder, and
+that's a placeholder. So, if I stick anything in here into there, we should be good to go. So, let's um let's just
+do it really bluntly. I'm going to go open my other project up. Ctrl C.
+Go back to this project, which is also open, and controlV. There's no
+importing. There's none of that kind of stuff. and you're going to get everything that you had in the other
+object. So, I'll just go ahead. Let me just click anywhere to deselect all of
+them and then just wire that in. And as I'm looking at this, I think it's
+a little small. Um, but we'll we can scale it up uh kind of in a in a normal
+way in a minute, but let's just zoom all the way back here down to the very bottom. And by the way, this is the end
+of the that scene. If you put the render flag on there now, what you should see,
+and they're really small, but you can see there's like these little guys that have these big horns, right? So, if I go
+in, I can go back here and just add like a quick transform
+at the end. And let me just increase that scale
+until it seems like appropriate to the rest of the objects. Right? So, they're still being randomized, but their base
+scale is is now changed. Um, I hope that I hope that makes sense for you all. Um,
+so you can see there they're still like attachments onto it. If you want to look up here, all of this stuff, here's the
+body sphere, like body sphere, body placeholder, you can replace those. Um,
+then you can, if you had different horns, you could add a different like appendage onto it that way. Um, that's
+from your first tutorial. Um, that's these two, right? So, you could do all of that stuff in here if you'd like. You
+can kind of change um what the default material that is that goes on there.
+knowing that it will get randomized. Here's what this assignment's about. Um, you're going to get a render at the end,
+but what I want you all to do is kind of go on like a little bit of a Easter egg hunt or uh think of it as a little bit
+of a labyrinth, right? Because it's really well do described and documented here, but it you do have to follow the
+wires and just click on different nodes and see, you know, what can I change? Um, so for instance, what I one of the
+things I did was I was wandering around in here and I saw, okay, here's how the horns are scattered and then apparently
+here's the ground size. Um, and I noticed that there's this mountain ground here
+and the ground original ground grid for you all. It might have been like something like a th00and by a thousand
+something like this, right? So something really big. Um, I
+changed it down to like, let's say, I think I changed it down to 250 a little earlier. So, we'll do 250 and 250.
+And then we'll go down to the mountain and say I want the highest possible peak
+to be, this is basically just noise. Um, let's make that like
+25, but make it a really big element size like let's say 75, something like
+that. And now you get this kind of like dune situation. I'll turn the the grid off. And so now it's it's all kind of on
+a hill. Maybe you simulate some stuff where it like kind of piles up. You can
+actually paint where you want it to go. There's a lot in here that you all can play with. Um, and I want you just to
+look at it and if you need to change something, click on, you know, click on the object, see what it does. Like click
+on every one of those and just be ready to use C if you break anything. That's your goal. So, I didn't show you all how
+to um how to do the rendering. So, I want to show you that as well. Um one
+thing you've got here, if you go back to the object level, there's this thing called cam one. Um what we're going to
+do is um we're going to switch to the stage view.
+And what I did was I imported the camera. So, for you it might not be there already. And I think it's just
+kind of like this. It's really bare bones. Um this is your your kind of render scene.
+One of the things I wanted you all to do first is check out uh the environment
+that you've got. So the environment I gave you is this thing called it it was not called valley of desolation had a
+different name. I I believe actually what I used was uh let's see is there an XR? It's like
+geogap. Let's see what this one looks like. Yeah, that's the one that I gave you all originally. So that's fine. Um,
+if you want to switch it to something else, this is where you do that. And if you want to know like essentially where
+to get it, um, there's a a website called Polyhaven, polyhaven.com.
+Uh, this is all free stuff. We're going to browse HDRI. So, these are like environment files. Um,
+that's where I got Valley of Desolation. Maybe I'll do something like H something
+like this one. Why not? So, I'll click on this. I'm going to leave it at 2K. An EXR file is fine. Um, you can go to 4K.
+It'll it'll be a more interesting background, but just so you know, um,
+that's where it is. So, I'm going to open up this show in folder. So, you see it right there in Chrome.
+And that will open up my downloads folder, which is there. I'm just going
+to uh, copy that. So, controll X. Actually,
+I'll just cut it. Um, and go back to
+So, I'm I'm in the other view for a second here. So, I'm not going to just throw my DVDs folder up there forever.
+Um, let's go to my project folder. And inside there,
+there's a thing called text. And I'm just going to go control V and paste
+that. So now it's inside the project folder, which is nice and clean. Don't
+point to it when it's in your downloads folder. I've you've heard me say that. If you guys do it, I will point and say
+remember when I said not to do that. Um, so let's click on this. We're going to go to dollar job X. And then now we have
+this one. And that'll swap it out.
+And what it does is it has a different location for where the sun is. So now if
+I want to kind of change my view a little bit, I this is a little awkward of a choice, but why not? Um what I'm
+going to do is um I'm going to import my camera. So I'm going to hit tab
+camera scene import camera. That's in the stage context. And I will uh I will wire that
+in. So now we have our camera. And
+sorry. There we go. That's better.
+There we go. We've imported our camera. So root object is object and then objects is camera one. Sorry about that.
+Um, so let's go back to our geometry since we don't need to be viewing this
+in stage view. Let's go back to like geo view
+object view here. And I'm going to select the camera. We're going to go to
+camera one right up here in the corner. And then I'm going to click on this button right here that says link the
+camera to the view. And it turns red. So now when I change the camera in here,
+it's changing the camera inside of that view. Um,
+so I kind of like getting my camera set up in here because it's a little bit like faster and smoother. Um, let's
+switch back to our stage view. And now when we go to camera, we'll see what the
+camera view. That's the camera view. Um, now if I have this selected here,
+watch what happens. I start moving the camera
+and I can do that camera in here as well. So, maybe I'll get Let's find
+wherever the sun is. Maybe we'll get some interesting shadows if we're kind of up here.
+All right. Yeah, let's get let's get something like this.
+Um, so one thing you've got to do, um, if you go back to that HDRI, it's a
+little confusing over here in Karma, which is the name of your renderer, um, you have to check this box. So, by
+default, it's on do nothing, but we want to actually get that background in the
+image. So, we're going to switch this to set or create. And then, it was
+unchecked before. We're going to check the light geometry. Leave that. Um, then
+if we go to our camera settings, we can set our
+u resolution right here. Um, so you can go to like do you want it to be 720p or
+do you want it to be 1080? We're going to leave that at 1080. Um, where do you want the output picture to go? You can
+click on here and say I'm going to go to dollar job and then say put it in the
+renders folder and I'm going to call this like uh triples
+04. And the camera you want to make sure that you're looking at camera one.
+That's the thing that's going to handle the rendering. And the last bit so that you have
+control over this is you're going to do um a USD
+uh render. There we go. USD render ROP. Um and
+that's really pretty simple. Um you select that node and it gives you this
+option to do this button that says render to disk. Right now the Karma settings are for CPU. Um, and you can
+preview that as well. So, for me, what I'm going to do is I'm going to quickly save my scene before I do this because
+this is frequently where if there's any kind of issue going on with your GPU or your CPU, it could crash at this point.
+So, I just want to be careful. I'm going to hit save. Um, and that shouldn't take too long.
+Okay, that took about 20 seconds or so. Um, we're all saved up. Um, so when
+we're in the stage view, we can switch um this from perspective to I'm going to
+start with CPU because it's a little bit more stable sometimes. Um, so I'm just going to preview what this is going to
+look like um in here. And this is where you may have to wait. Uh, if you have
+like me, if you've got um two different scenes open at the same time, it might
+be that you've got some memory issues and this might go a little bit slower. So you might want to close some other stuff. This is not something to be doing
+on your laptop to be honest with you. Um, so I'm seeing there's some cool stuff going on here, but I never really
+previewed this. So, um, I've still got the camera locked here. So, why don't I
+just kind of move my camera a bit.
+Yeah, we're running into some issues here. Yeah, there we go.
+And we're previewing a little bit and and you know, maybe I want to see a few more. And I don't really like the way um
+I'm going to turn that off. I don't really love the way that the canyon is kind of in the background. Um but I'll
+I'll leave it in the background this time just so you can see that, you know, that that sky will be there. Um you
+know, the road, all of that stuff. Um, this is actually probably like the worst
+possible choice. Um, I'll tell you what, I'm going to switch that really quick because I just I just really don't like
+the way that this looks. Um, I'm going to switch my texture
+to something a little bit better. Let's just go back to this one.
+And it'll be nice and bright. Um,
+so you're seeing we're getting we're getting some kind of action here. And there's already by default like a desert
+texture on the grounds. This one kind of seems um appropriate. Um, and if I'm if
+I'm ready for that, if I like that. Okay. Um, we can go back down to our render RO and I'm just going to hit
+render to disk. And it may open up a popup for you. It may not. Um, but you can see rendering
+speed up here. Shouldn't take too long.
+Now, this is also like while uh while we're here, if you want to render a
+frame range like you've animated the camera, this is where you're going to do that. Um, and it'll do each frame.
+Let's do something like this. Good. Um, fine for now.
+We'll go back to the render and let's just see if we can
+just go ahead and render to disk now.
+Yep. There's triples05 PNG
+and there it is. Okay. So there there we have our our image. Um and this is you
+all can try like to turn something in try like a handful of different views like a maximum really let's say of four.
+Okay. So let's not think you know 30 different versions. Let's try to commit to um to four different um compositions
+of your scene. And that's what you all are going to turn in at the end. Okay. Um so again, just to be clear about what
+this assignment is all about, going back to the object mode, going back inside of Tribbles, I'm going to turn off the
+camera linking and go back to just like perspective
+by like just moving my view. So, I can always see where my camera is. Now, um
+I'm going to just remind you all that you can zoom into here and just look at all of the various uh options that you
+have. Look at the material pallet, you know, like have a look at what the different options are. Like I've got
+copper and concrete and this desert material. Like there are some things in
+here. If you want to download additional materials and really don't you don't
+have to do any of this. I gave you a handful here that are already randomizing. Um you know that's that's
+fine. Um you know you can you can really you know if you're used to this kind of software you can. But otherwise I just
+wanted you all to be able to read through this and hunt uh and learn a little bit about how it works. Okay. So
+I'm going to stop recording there and um kind of wish you all luck with it.
+

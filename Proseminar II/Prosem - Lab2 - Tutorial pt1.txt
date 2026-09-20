@@ -1,0 +1,508 @@
+Tutorial Transcript pt.1
+Hi everyone. So this is going to be the tutorial video for the trouble with
+tribles uh which is our our second kind of major lab assignment uh in proseminar 2. Um
+you will not be building this particular monstrosity that I've put before you
+right now. Um you will be doing something a little bit simpler. Um, I I
+kind of like to show this kind of thing because it's a a way of seeing my process and how I I came to um create
+the network that produced this. Um, and so what I'm going to do is I'm going to produce something very similar to this
+so that you understand the way that the nodes work and the way that you could create a thing like this from
+photoggramometry. Um, but what I'm I'm really gonna do,
+um, here is, uh, I'm gonna drag another view into the scene here, and I'm going
+to be giving you all a copy of this file, which I've just referred to as
+simplified uh, triples project. And what it does is it gives you a lot of notes
+and it it shows you the way that a really clean network um would uh allow
+you to to switch out options for this concept that we've been talking about um
+and we will talk about in class which is generative art and procedural modeling in general and using this concept of
+tribles like these weird little creatures that you can randomize uh certain attributes on create appendages
+for and material switchers and that kind of a thing. Um, but
+you know down the line what you're going to do is create a population of those objects. Um, and we're going to use that
+kind of idea of hybridity as a metaphor to think about like what do these hybrid
+uh systems really do? What does it mean to to quote unquote create a hybrid um
+model? Um, and how do we define that in the data? um and and do things like
+check our geometry spreadsheet to sort of understand um you know maybe what are the underlying attributes that are creating
+um this quote unquote randomization. Um so that's where we're headed. Um what
+I'm going to do uh is pause really quickly and come right back um with a a cleaner system. I again you all will
+have the ability to to sort through this and and uh really just click through it and understand how this is happening. Um
+and I'm going to let you all do that on your own. And right up at the top here, you can see you all will be able to to
+like replace these things with things of your own and start thinking about how the parameters work. Um so I'm trying
+not to to overwhelm you with too much Houdini, but at least throwing you still
+in the deep end with um this network system. Um, so I'm going to pause here
+and come back and just show you a little bit of the basic modeling tasks so that you might be able to create um,
+appendages and things like that that could be randomized.
+So here we are in a empty network. Um, I'm going to
+open things up a little bit for you all. Um, and one of the things I I think you
+all should learn how to do, what I'm going to do is is do another quick pause. Um, but I want to make sure that
+you all can can see this in the video a little bit better. So, if you all are having any trouble like seeing icons and
+things like that. Um, one of the things you didn't see in the initial videos is um, ways to change your viewport. Um,
+right now the global UI scale for this 4K monitor is 1.5. I'm going to bump that up to do up to two. Hit apply
+and hit accept. And you'll see nothing has changed. Um but as soon as I restart uh the software, the next window will
+have that. So I'm going to do that really quick. Um and just take you all from there.
+Okay. Hopefully this is a little easier to see. Uh let's start with this empty network. Um just as you saw in the in
+the initial videos, I'm going to have my my left hand on the keyboard here. So, I can just keep hitting tab and I'll just
+lay down a geometry node. That's where we're going to start. I'm going to double click on that uh on that object
+to go into the geometry uh context first. Um let me just drop down. I'm
+going to type uh tab here and just drop down a quick sphere. Um and we're going
+to start um from there. Now that I've got something up here, um I might as well set my project. Um, so what I want
+you all to uh be sure to do is um when you what you're going to do is create a
+new project actually inside of your um your project folders. So what I'm going
+to do is uh call this um triplet Houdini Labs as my project name. And
+then under project path I'm going to click on this button. I'm going to go to my X drive. Uh for you all it will be
+it'll look a little bit different. you won't see this Proseminar 2, but you will see like your name here. And so you
+can see I've got this one already created. Um, so what I would do is, you
+know, I would put it like kind of in this level. Um, but since I already created one, um, you know, I'm going to
+kind of cheat a little bit here. You're not going to need all of these. So I'll just I'll hit accept here, but I'm not
+actually going to create this. I'm just going to set my project. So let me just walk you through that. So, Houdini HDA,
+we're not going to do a simulation. No need for YIC. We do not need renders,
+flip books, we can do, well, let's keep renders up there. Scripts, most of these things we're just we just don't need.
+Um, this is primarily what we're going to need. Um, objects, geometry, right?
+Textures, that kind of stuff. Um, and then I would hit accept. Um, I'm going to hit cancel because I've already done
+this. And if you've already opened a uh created a project and you want to just make sure that you're always working in
+that project, we're going to go to set project and I'm just going to quickly go
+uh here
+and this this is it. So I created one that's like, you know, much bigger, but um I'll just accept that.
+Good. Um so you all will probably be using set projects. What I'm going to do is give you guys that um that template
+and it's going to have everything that you need inside of it. Um we're going to go over that in class, but that's just a
+a quick housekeeping kind of thing to do. Um so let let's begin um
+let's begin with this simple object um as a as a sphere. Now, this could be if
+you wanted to import your um your photoggramometry objects. You would u
+hover over here, hit tab, go to file, and I've populated a few objects for
+you. Um so, I wanted to just show you all how that worked. If you go to dollar job, that's uh a a way of of using
+what's called relative paths to make sure that you're looking in your project folder. dollar hip is the same thing.
+Um, if we go and save uh the project. So, I'm
+going to do save as job and I'm going to call this um
+video dribbles, right? And hit accept. So, that saved my scene.
+We have a project and a scene. Now when I go into file and we click on here, if
+I go to either hip or job since the hip file that which is just the name of your
+scene file is in the same folder as the job file. So those things don't really matter. U but for a dollar job we'd go
+to geo and I've got all of these like little objects um from the national museum touch collection, the African art
+collection. Um, if you go to OBJ, you could just kind of grab Let's Let's pick
+up this gel mask. Um, OBJ right there. Um, and if you put the
+render flag on that, then you'll have this kind of untextured object. Um, we
+can then, um, add another node below this called UV quickshade
+just so we can see our texture. And the texture map that we want is going to be we're looking for the gal mask texture.
+And there you go. Okay. So, that's kind of what what you might begin with. Um I'm not going to get into this part of
+things too much today. Um we're just going to kind of leave it just leave it there. Um,
+we can do some fun stuff with uh, you know, converting the color into point
+attributes and things like that, but we'll wait for that for another time.
+The next thing I want to do is just make sure, you know, this object's already kind of settled. But if I wanted to
+quickly resize it, um, like I knew a bounding box, for instance, and and
+reposition it, I can uh add what's called a match size node, which is really very powerful. Um,
+I'm going to click on that, and you can see it puts the center kind of in the in
+the middle of the origin by default. If you switch to justify Y, remember X, Y,
+and Z are visible here. Um, you're going to justify Y to the minimum. It will
+always place the object on top. That's a a nice little trick. Um, you can also
+scale it to fit and say, um, you know, you want it to to fit a uniform scale to
+another object. So, I could drop down a box and say this box is one by one by
+one. And if I drop that match size in, it's now going to match that
+object, it's moved it down. Um, so what we want to do uh quickly here is just kind of fix
+these. Let's do not uniform scale, but only scale it maybe on the Y.
+And you can kind of elongate it so that it only fits within the Y and the rest stay exactly as they are. Or you could
+say instead of best fit, just use the Y that way and say make sure the Y fits, but
+everything else will get bigger instead of changing it. And you can see it goes outside the bounds. Um, that's another
+just kind of quick trick. Um, you know, we can we can fit some of these um if we
+move our box. Another procedural technique here is to
+um take the box itself that we're we're dealing with and say what is its size
+and we're always going to um move the object up half its size. So I'm going to
+say copy parameter and I'm going to paste that in here
+as a relative reference and divide by two. And when we turn that on, that's it. So,
+what's cool about that is if you go back in and you ever like change the size,
+it's always it's going to be able to change the size very easily just on that one slider. And I'm using the middle
+mouse button here um when I do this um to just kind of pull that up and
+down, but it always stays on top of of the uh the grid that way.
+All right, let's continue on with a little bit more randomization for this object. Um, what I'm going to do is just
+kind of create some funny little uh horn shapes that, you know, can be uh
+attached and randomized um to just like the top of this. Um it's this is not a
+super wellthought aesthetic decision. It's just a a demonstration. So um I thought we'd try
+uh from there. Um, so let's go first and say where this is going to happen. Um,
+I'm going to pull down from the match size and hit tab and say attribute
+paint. And I'll put the render flag on there. And you'll see by default it kind of
+goes to this purple thing. If we are in the viewport and we hit enter, it now
+gives us this attribute paint. You see this little brush? Um, you can kind of
+zoom in a little bit here. The brush is always going to stay the same size even if you zoom in. So, some of you have use
+sculpting tools before. Sometimes the brush actually always stays like kind of in pixel space. This is a little bit
+different than that. Um if for instance you want to um you know change the brush
+radius you can hit control and shift and left mouse button and that will kind
+of shrink that down. Um and so I'll do that. I'm going to make sure that the
+horns that we're going to put on here are only going to be here [snorts]
+and here.
+Okay. And you can see it has a drop off. So, this is places where it's just like slightly less likely to scatter points
+that will eventually uh become like little horn shapes and things like that. Okay, not going to dwell on that for too
+long here. Uh the next thing um that we want to do is just drop down that
+scatter so we can see where we're going. Um so
+all right. Um so let's look at that attribute paint actually a little bit
+uh more clearly here. So by default it just creates an attribute called mask. I'm going to rename that and just call
+this like where horns go. Um, and the
+purpose of that, if we kind of go back, um, and see where we're where we're
+painting, we're going to say it's going to be a float attribute. Um, and so if I
+go back to my geometry spreadsheet, you're going to see a point attribute
+here that says where horns go, and you're going to see some different values, right? So definitely horns are
+always there and they're definitely there and less likely there that kind of thing and definitely not there. That's
+all we're looking for there. Okay. So that's just a way for you all to understand that all of this stuff is being driven by uh attributes that you
+create. So let's uh scatter some points on that. So I'm going to pull this down. Hit
+scatter. And what we're going to do with that
+system is we're going to keep it by density. And we're going to have a density
+attribute which is called where horns go. And if I just turn on the scatter,
+you're going to see this is what it's going to do by default. That's kind of a lot. Let's pull down the number of horns
+a little bit to something like a little bit more manageable. Okay. And I'm going to rename my first
+one. And I'm going to call this scatter warrants. Great.
+Now, what we want to do is add a few more um attributes. Um so on these
+points that already exist, we're going to do some fun stuff. Um so I'm going to pull down a um
+a network uh box right here. Actually, I'm going to pull this one out of it.
+and just keep this one separate. And we're going to call this like horn
+variation attributes.
+All right. And our first thing that we're going to do is drop down another node called an attribute
+adjust. And the thing we're adjusting is a float. So it's called attribute adjust
+float. I'm going to wire these up. Make sure that gets rewired and that gets rewired.
+Another quick trick, if they didn't go over this, if you hold down Y, if you ever need to disconnect a wire, hold
+down Y for these little scissors and just go like that. It's kind of a useful
+trick. Another thing you can do is just go and shake it off.
+Okay, we're going to call this one horn length. Things that we can do to uh
+to the horns. we can adjust their length. Um,
+and we're going to say under horn length that instead of
+pattern being constant, we're going to make it random, a minimum and maximum of like maybe 0.05, so at least looks like
+we can see it. And maybe something like 0.25. Okay. And if I go back to my geometry
+spreadsheet, um, and I've got this one visualized, um, we want to make sure that we're
+putting it on the correct, um, location.
+And the way to do this is we're not going to be doing it on the scale. That's a special attribute. We're going
+to rename this horn less.
+And really, when in doubt, use underscores. That's just something you're going to see me do a lot. So, now
+we have horn length right there. I'm going to go back to scene view. Nothing has changed because we haven't done anything with it yet, but just bear with
+me here. We're going to drop down another one. Um, we could even Let's
+actually do this a little faster. We're going to go crl +v to copy it and just
+rewire that in. And instead of horn length, now we're going to call it horn
+bend. Um, and inside horn bend, we're going to
+say, uh, it's also going to be random. It's
+going to be change the name here. It's going to go from zero to 120.
+Something like that. Good. And I'm going to go do that one
+more time. We're just adding a few things that we're we want to randomize. Um, so how much does the horn bend is a
+good thing to to play with there. Okay. So on this one,
+we're going to call this horn squish.
+and make sure we reame this one as well so we can don't get lost.
+A horn squish. Um, and I know the the
+basics of this. Um, so just kind of bear with me. You're like, where are you getting these values? It'll be clear
+later. So, I'm just going to make it from 0.5 to four. Um, that's the amount of kind of yeah, just kind of
+bulbousness. Um, we also need to know where is that kind of bulbous part going
+to be. So, let's add um I'll just copy and paste that one more
+time. And we're going to call this uh horn squish
+for position. And I'll do the same thing here. POS.
+And we're going to make that from let's say 05 to
+like 7. Okay. And that that can be obviously that can be adjusted later. Um
+what if we also want to twist the horns? Okay, that's something we could do. Going to hit control CRLV.
+All of these ideas of things that you can do to it are going to come from
+really one node that we're going to add later, which is um really very powerful.
+Um which is is just called the bend node. It has a lot of these kind of attributes built into it. Um so just
+bear with me for now. We're just doing the setup. Uh so this one is going to be
+uh horn twist.
+And let's see what kind of values can we have for that. Something I mean it can
+really go pretty dramatic. So 180 to let's do like negative 180 to
+180. So it's going to kind of spin around. And we'll copy this.
+Okay. This is kind of the part where you're probably going to watch this on double speed. Um, but it's worth seeing
+as it as it comes together. So, the last one we're going to do, um, instead of a float, we're going to have an integer.
+Um, so let me drop this one down
+because this last one, where on earth did that go?
+Let's do that again. I must have missed it.
+There it is. Good. Um, this last one is different because we're going to call
+this one the variant. So, it's going to decide which of two different kinds of horns are we going to put on there. Um,
+and we're going to name that horn variant
+and do the same here.
+Okay, so that's enough setup for now. Let's do something a little bit more interesting. Um, let's drop our first
+super basic horn. We're gonna hover over here to create a
+network box. That's where that rogue adjust integer went. There we go.
+Let's drop another channel. Uh, sorry, network box. And this is going to be
+uh horn bandage one.
+Not a very inspired name. Um, but this is some true procedural modeling and I think it's a a good way to just be
+introduced to how this stuff works. So, let me hit the tab key and just start with a simple line.
+Drop that line in here. And you can see it's its scale is a bit a bit much. Um,
+I'm going to kind of mess with it a little bit later. Um, I want it to have
+And if we turn this little button on here, we're going to be able to see uh points a little bit clear more clearly.
+So, I'm going to drop a bunch of points in here. And I don't know how clear that
+is, but you can see lots of little kind of more little green dots appearing. Um,
+I can make those a little bit bigger. Um, in fact, I think I will. Um, so I'm going to pause for just a moment here.
+So, if you hit the D key when you're hovering over the viewport, it opens up all these display options. I don't want
+to get too into this, but my point marker size was like way too small. I just want to pull that up a lot. Um, and
+then I'm going to close that. Good. Now, we can see those a little bit
+better um as we start adding more and more points. Okay. So, that gives it more information when we do the bend
+later. So, that it will bend kind of smoothly if you do that. Um the length I'm going to keep this at something like
+yeah like 0.2 or something like that. Um for now um we're going to be working on
+creating a a a very short little script here in a minute but I'm going to leave it alone for now.
+From here I'm going to take that uh object and just do a simple sweep. I'm going to hit tab and add the sweep tool.
+Okay. And um you know by default it's going to give us this round tube. I'm going to make it a little smoother than
+that. Um the radius is a bit much that going
+to be let's say 0.01 something like that. Uh so if you accidentally add too
+many points there it's going to turn green because it thinks it's a function. Um if you ever do something like that
+just rightclick in there and say delete channels. It's a weird way to phrase that but that's kind of what's what
+we're doing. Um, so I'll leave that um there. Um, I do want to have endcaps. So
+I'm going to say single polygon end caps and visualize that. The end caps will
+create these little kind of ends like this. Okay, super simple. Um, nothing
+special. Um, one thing we always want to do though is instead of putting this,
+you'd think like horns go up. It's a little complicated, but I want to make sure you all remember that if
+you're doing this kind of process, it's always a better idea to make everything move in the Z direction. So, I'm going
+to move the direction here to 0 0 and one. So, it's going in the positive Z
+direction. Um, that's because Z is the direction of like all extrusions uh away
+from an object's normals, which are um just vectors. And when I say vectors, I
+mean uh a a direction. So an x y and z direction for every polygon. And in
+Houdini, they call those prims. But they'll have normals on your let's say your scan data that say which way is out
+like where does this polygon face? And if your objects that you're copying to
+those to the surface of those objects like those scatter points, um if Z if
+the object is pointing in the Z, it'll always go away from uh from the surface.
+Okay, so that'll probably hopefully be clearer soon. I'm going to pull down another um tail here and say tab. And
+now we're going to add that bend. And we're going to do a lot of stuff in here later, but I want to just show you what
+a bend tool does. Um you can see it visualizes this kind of long thing and
+you can kind of do that right. Um that's if you want to do it in here. What we're
+going to do is mostly in this parameter um space. Uh so let me give myself a little bit of
+of room here. Okay. So we're visualizing that bend.
+Um what I want to do here is um give it an angle. The bend is something that I
+can control right here. Okay. So, I'll just kind of do something like this so we can always see what it's doing. Up
+vector is correct. Like, so that's that's kind of the direction we want it to go.
+And what we want to do as well is do a taper and as well as well as a twist. So
+the taper I'm going to make sure that um it always
+tapers so that it comes to a point on the end. In order for that to work, we need to know, you know, what is the the
+length of the entire line. Um so what I'm going to do is um
+we're going to grab another attribute and and put it in there.
+Pause. Okay. So what we want to do here to uh
+remember we need this um capture direction to be now it's moving in the Z
+which is correct but our capture length is too long. So we want to drive that capture length by the length of our
+entire line. So let me copy that parameter put it in here. And now my
+capture length I'm going to paste that as a relative reference. Okay. So, right
+click, paste relative reference, and I'm going to hit enter. Now, no matter what,
+if I change the length of the line, the the taper distance or the the um the
+bend distance, if that makes sense, is always going to be the same as the length of the line. That's really kind
+of important because um what you're going to do is just taper that down to a
+point. Okay. So, that's one thing that we we really need to uh to keep an eye
+on. Um, another thing that we talked about doing is doing the twist settings.
+Um, so that's, you know, another thing that you could do, this is cylindrical,
+so we're just not going to bother with this version. So, I'm going to kind of leave that alone for now. For this really simp, this is like the simple
+horn. Um, so I think we're going to kind of leave that there. Um, I'm going to create um another uh horn
+appendage, let's call it, um, over on the right here. That's going to be a little bit more complicated.
+So, let's create another network box. And
+unfortunately, if you have something selected, it will always put the network box over the thing you selected. There we go. U, this one's going to a little
+bit more uh be a little bit more complicated. So let's go and call this
+or endage listed
+something like that. Okay. So let's it has to have some information in there to to be able to see that. So let's start
+um even more procedurally. So I'm going to start just with a simple circle
+and I'll drop that in. Um, and that that circle I'm going to
+want on that XY plane because remember we're going to be kind of extruding out in this direction. Um, but let's have
+uh let's have it be a bit smoother. Let's like say wow like why not just like even 100.
+Just make it nice and smooth. It's a polygon so that's adding a lot of data. Um but you'll you'll see in a moment uh
+what this is going to do. uh what we're going to do is um
+we're going to
+we're going to change this radius to something much smaller. So let's go to 0 2
+and 0.02 002 for both.
+Zoom on down here. So this one will be a little bit thicker. Um, and this is a
+little bit uh confusing, but we're going to have to control this object a little bit u by adding uh an attribute
+expression um to change its uh its normal values.
+Um, what I'm specifically talking about is what I want to do is for all of the
+points that are around this circle, um, I want them to have a normal
+direction that points away from, uh, the center of the object. So, this is
+probably the more adv only real advanced thing I think that we're going to cover today. Um, but just bear with me here.
+So, we're going to add um an attribute
+expression and we're going to work on that normal
+for the points. Right? So, here we have this object
+and we want to look at its points. all of those things like it does not have point normals that are facing anywhere
+other than just when you turn that one on, you're seeing they're all pointing towards uh the center. And what I want
+to do is just create kind of a jagged pattern around it. And so I'm going to use the normals to do that. So let me um
+just switch this really quick. And there's a an option in here called
+where is it? Um ah here it is. Spherify normals. And if I turn that on, you're
+going to see what it's going to do is it's going to point every one of those things away. And it's created this little vex expression right here. Um I'm
+giving this to you the short way just because there's like a template that's already there. Um let's not focus on
+this too much. I'm going to add in an another useful uh trick here called uh
+an attribute adjust float, which we've seen before.
+There we go. And what we're going to be working on um
+for that um is uh what we're going to call a radial
+offset. Okay. So, let's call this new thing
+radial offset with an underscore. We're going to be
+working on points. Um, we want a pretty small um I think instead of uh constant
+um we're going to do a little bit of noise and we're going to say that noise
+is going to be negative like so it's going to go inward about
+point five and a maximum value of 0.2.
+Um, we don't really have to to think too much um about this. We can do like a
+range length. Um, I think minimum and range length is better. So like 02 is
+the amount of movement um that you're going to get. Um, and we're going to call that
+uniform. And the noise type that uh that we want is just going to be called simplex. And
+we want really small values for this so it doesn't get too crazy. And we'll I'll visualize this in a moment. Um, and
+we're going to say like 6.1, something like that. I mean, just something big. Um, that part you'll you'll figure out
+in just a moment. Um, because in order to see this, we're going to look at our geometry spreadsheet and see I've got
+these numbers, but they're not doing anything. But I can act on them with uh what's called the peak node. So, I'm
+going to drop down peak. And peak is going to operate um by
+default on um your normals. Um but we don't want to recmp compute those. We
+want to use the ones that we already had. Um and the mask attribute. Um what
+we're going to do is scale by attribute. And instead of mask, we're going to go by radial offset. Um, and right now the
+distance is pretty small, but what if I crank that up? Okay, it's going to do
+this like really crazy thing. I'm going to leave it some somewhere like about like that. And knowing that this is
+another this option is a is very random, right? So,
+just very quickly kind of looking at um what all of these things this this
+little offset could be randomized so that you always have a random shape that's being generated. And this is kind
+of fun. It gives you a way to um um to fix things up so that they're random,
+but they're not too kind of unclean, I guess. Um, so really quick, once we once
+we've done that, we don't want these normals anymore. Um, so I'm just going
+to create an attribute delete.
+And the point attribute we want to delete is the normal. And we turn that on. And now everything's facing out. And
+it looks a quite a bit cleaner now. Yeah, that's pretty good. Um, another
+thing I want to do is Sure. It looks pretty smooth. Um, I'm going to make it I'm going to make it worse like like
+find one. Yeah. Like something really ugly like this that has intersecting pieces to it. Um, I can still clean that
+up um with one of my favorite nodes which is this um fit or spline fit node.
+Um, it's going to convert this into a nice clean thing. Um, it's doing quite a
+bit of like heavy work here. So, we're going to want to um maybe take this
+tolerance down a bit to something like
+something like that.
+Okay. And that's going to that's going to give us a nice cleaner shape that doesn't intersect with itself. Um, and
+we're going to do this as what's we're changing it into a thing called a called nerves, which are like a vector graphic.
+Um, we can talk about that later. I still need this to be a um a polygon
+thing. So, let's just drop down another useful uh node which is called reample.
+And that is going to essentially grab um the information that you have
+um and give you um information around it. So the level of detail and all that
+stuff is is not really the thing we're messing with. We don't want maximum length segments. What we want is a
+maximum number of segments and we're going to kind of pull that up
+until it looks kind of interesting. Something more like that. So it seems like you know what are we doing where we
+had something pretty good and then we had did it simplified and then we complicated it again. That's just a way
+of converting things into the the data format that we want. Um, so if you
+remember, um, we have, um,
+another quick trick to extrude this thing, um, out by, uh, creating a sweep.
+And I'm just going to plug. If you hover over the um the inputs
+right here, it'll say what is the thing that you're sweeping? And that's the
+cross-section. And then it's saying what are you going to sweep along? And what what I might do is just keep the exact
+same line that we had before. Um, or if I wanted the line to be kind of
+different, like a different length so that these are always longer, then maybe let's just do that. We'll just create
+another line and it'll be called line two. And I'll I'll plug that one in just to kind of
+give us an idea where we're where we're headed with that. Um, again, we would still have to kind of pull that way up
+to make sure that it bends and all of that um nicely. So, let's have a look at what that did. Uh if we turn on the
+sweep by default it's going to do some things that we don't expect. Um one of them is the line is facing the
+wrong direction. So let's do that here. And
+we can also um you know control this length a little bit. Let me just make it
+like point let's say 2 for now. Something like that.
+And if you look at this, you're like, why is that so simple? Um, we don't want the round tube. We want the second input
+cross-section. And that's going to give us what we want. Let me turn these normal visualizers and the point visualizers
+off. That's pretty good. We do want single polygon end caps. So, we've got
+this thing, right? Um, we're going to pretty much repeat
+what we already did with that previous bend. Um, so why don't we just copy that
+and paste it. And this second bend will go right here.
+I'll pull this up and make sure this is on top. And remember that the purpose of that is
+now I can move all of these together. So now we have something very similar.
+And I need to make sure that this says line one. I want to switch
+that to line two.
+And now I've got this line driving that.
+All right, that's pretty simple. Um, this shouldn't be, you know, too confusing. Um, hopefully you all are are
+following along with where we're headed here. Um, we don't have to get too much more complicated um, beyond this. Um,
+what I want to do is just drop down what's called a switch node um, right
+down here. And I'm going to put the first option
+here and the second option there. And I'm going to turn on that switch node and say now we're swapping between these
+two. Um, one thing I do want to do in the bend because that was kind of the whole point is we want to twist it. Um,
+so unlike the previous one, um, that did not have, um, any twist to it.
+So, let's turn that on. And we're going to kind of show you just a little bit like what that what that looks like.
+Okay. So, just right down the middle. You could even go really aggressive and
+say like 300. And now it's going to really get
+twisted. Okay. Now, eventually that'll be driven by the point data that we already had. So, you
+know, it may not be as as dramatic as that. Okay. So, there's that. Perfect.
+Um, we're moving along and we're we're actually really close to the end. There's going to be a pretty nice payoff
+here, I think. Um, so let's do the important work. Um, so this is where
+again, other than that little kind of uh what did we do? The attribute expression
+um there's a little bit of what's called VEX code in there. But um this is the next more complicated thing. What we
+want to do conceptually is um we're going to operate on every single point
+is going to take its information and apply it to things that are happening in
+these two options. So in order to do that, we need to to drop down what's called a for each loop.
+And you got to spell it right. Okay. So, what we're going to do is for
+each uh point and we're going to drop that down
+and we're going to copy one horn. So, I'm going to do this thing
+called uh copy two points. There we go. And we're
+going to put that in the middle. So it begins by grabbing one point doing a
+thing and then when you know and then kind of iterating back to the beginning
+back to the beginning and at the end it has it accumulates all of them and has done something different to every point
+that comes into it. So here we are. I'm going to link those up together. Um I
+can put my switch node in here because that's what I'm copying to points. Um, and if we kind of zoom away,
+okay, we should see, unless we've got this wire, we do have it wired backwards. Um, that's kind of fun.
+That's another um, let's call that glitch art.
+Um, the geometry that we're copying is going to come from here. So, now we've got, as you see, one horn. If we went
+back down here to the end, you'd see it's just doing the one thing. Um, but
+we want to do something a little bit more procedural because it's just grabbing the one horn. It's not actually
+taking those fun attributes that we already created on the points. Um, so we have to tell each of these things to pay
+attention to what's going on over here. Um, so let me let me begin um with let's
+say the simplest one. Let's go to bend one. And in here, what I'm going to do
+right under, let's start with bend angle because that's uh
+horn bend is a thing that we did. And remember we
+we created this attribute called uh called horn bend,
+right? And what we what we're going to do is uh
+go back in here and look at the bend angle and make sure that it refers to something um that's in the point. Um so
+bear with me. Um we're going to actually write our very first little um
+expression here. And I'm going to it's I'm already trying to say I'm going to be acting on points. And when you do
+this, it it says kind of what everything is supposed to do. Um, you can kind of
+follow along. This is not the clearest thing ever. So, I think this is going to be one where you're just going to have to kind of trust me here. The first
+thing you want to do is say I'm going to I'm not going to wire this, but I do want to um I do want to refer to it.
+Okay. So, I'm going to say dot dot slash. So that means go outside of this
+node and now it's saying okay what do you want to refer to? Um and I want to
+res refer to for each begin and say so that's what I'm going to be
+looking at is the node that's there. Um I'm going to want to say what's uh
+um which input uh are we paying attention to? The input is uh you know
+the zero. So, the first input um and then what do we want it to be
+paying attention to? And I want horn. Let's see. It was called horn bend.
+And I'm just going to kind of conclude there. Okay. So, you're almost just going to have to trust this. If I click
+on bend angle, um let's look to make sure that hornbend is Yep, that's
+spelled correctly. Um, and let's just look at the at if we
+we've got a little bit of an error and it may say, yeah, there's a there's an there's an
+issue right there. So, let me make sure that I've written that correctly.
+Okay, I definitely did not um instead of uh
+finishing that right there, I I didn't do that right. Uh, so I need um just to
+conclude that that quote. Okay, so just look at the at the tutorial and trust me
+on this one. Um, that's what it's going to do. So it's going to it's going to handle the horn bend angle based on
+that. So here's this random point and that's just the the horn bend random
+horn bend that's being applied to that very first uh example. Um, and if you
+want, um, you can kind of visualize it a little
+bit and see, you know, that these are are bending slightly differently. Um, you can kind of see them doing that.
+Okay, so we're we've got our first one. Once we've got one of these, the nice thing is if we have anything else that
+also needs to do that, um, we can we can basically cut and paste. So I'm going to
+copy this and not copy the parameter. I'm just going to copy the text. Go control C.
+And we remember that we had a squish thing and it was called
+um horn squish.
+And we also had the squish pivot. And that was going to be called
+squish pause. underscorepos.
+And that's kind of doing some randomization there. Um, and our capture
+length is still just referring to that line. Okay. So, let's do the same thing over here with this bend.
+Um, we're going to go up to uh check our our bend angle.
+Um, and it's probably going to be the same thing. So, uh, we we're going to
+take, um, that horn bend. So, let's just like copy
+over from here. Just make sure that we've got everything straight. Now, we could have just copied
+the whole node, honestly. Um, if I was going to do that again, I would probably do that. Um, we're going to drop that
+one here. And then we're going to say um drop this one here. And remember to call
+this horn twist.
+And we've got the horn squish.
+Squish. And that's going to refer to squish
+position. [snorts] Right? So now you get this kind of funny
+twisted bulbous thing and all of them are going to the same the same option.
+Right? It's going down to the switch node. But we've we're missing one one last element
+um on this which is um we want to to swap out the the option kind of you know
+which thing is going to get copied.
+And to do that um we're going to do something really similar. We're just going to say go look at porn
+[snorts] variant. And now it will randomly swap between
+the two variants. And if we go down to here, we should we're we're almost there. Um let's double check on that to
+see where we might have gone wrong. So the easiest way to check that is
+let's just go to the geometry spreadsheet. And we can see right here horn variant.
+It's all zero. Okay. So something was clearly not correct in here.
+There we go. Constant value zero. We want uh something like random with a maximum
+value of zero to one. And then it's just going to do that. And if we go back to
+our scene view, yes, now we have a little bit more randomization going on.
+And if we want to visualize that on top of the object, I'm going to go down to tab and say merge.
+And from here I can take all the way up to either
+let's do it like after the quick shade. Let's do it. Yeah, let's do it right
+there. We don't need anything more than the position to be the same.
+And there we go. Now we can do some other stuff. I'll let you all play with that. Um, this is kind of where I'm
+going to end this tutorial because, you know, from there we can get into more complicated things, but if you if you
+export this object out, um, you know, you can pull it in as a mesh with all of
+these kind of weird things on it. Um, you can randomize the material that goes
+onto them. Um, those are things I'll let you all play with, but um, don't get too bogged down on it. Um the next kind of
+step is to um take this object u that you've created. So maybe you make this
+entire geometry like geometry one um let's call this um
+um mask with horns.
+And if you did that in a in inside of the template that you already had, you can just refer back to that at the top
+of that network and it will randomize that for you. Okay? So I will let you
+all kind of play with that on your own and and if we get to it in class, I'll I'll demonstrate that as well. So um
+this has been a just a quick introduction honestly to um the way that
+this concept of randomization and generative um uh 3D modeling works and
+procedural modeling in general. Um, this is not how I normally begin a tutorial in Houdini, but I think because we're
+we're kind of thinking along the lines of data visualization and that kind of thing, I think this was a good way for
+you all to remember how to check the geometry spreadsheet and see how you can take one form of data like points that
+are completely detached from another form of data and just attach um random
+numbers that can affect just about anything. Anything can be an attribute. Um so if you all are downloading
+spreadsheet data there's methods for that to even become a way a pipeline um
+into this software. So um I want you all to to do this assignment like create
+something like this. It does not have to be this mask um but it could be one of your objects and put some horns on it.
+That's kind of all we need need to do to think about the randomization just so you learn how it works. Okay. And I'll
+I'll leave you all there.

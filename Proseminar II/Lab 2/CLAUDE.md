@@ -20,6 +20,7 @@ repo**. It has three labeled placeholder slots where custom bodies get wired in.
 
 | File | What it is |
 | --- | --- |
+| `ASSIGNMENT-BRIEF.md` | The instructor's assignment description, including the framing on hybridity |
 | `SETUP-Claude-Code-Houdini.md` | How to set up this machine to script Houdini. **Start here on a new machine.** |
 | `Lab2-Tribbles-Written-Walkthrough.md` | Both videos transcribed into step-by-step instructions. The manual path. |
 | `Prosem - Lab2 - Tutorial pt1.txt` | Raw transcript, video 1 |

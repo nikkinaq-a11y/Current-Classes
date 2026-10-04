@@ -1,0 +1,30 @@
+{
+  "splats": [
+    {
+      "filename": "autumn-mountain-valley-panorama.spz",
+      "transform": {
+        "translation": [
+          0,
+          0.8713897466659546,
+          0
+        ],
+        "rotation": [
+          180,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          6.123233995736766e-17
+        ],
+        "scale": 2.131192922592163
+      }
+    }
+  ],
+  "metadata": {
+    "exportTimestamp": "2026-10-03T18:51:50.124Z",
+    "spzExportVersion": 3
+  }
+}

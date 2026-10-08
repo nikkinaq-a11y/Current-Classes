@@ -105,6 +105,11 @@
     #audio-delete-confirm { background: #bd3535; border-color: #bd3535; color: white; }
     #audio-delete-confirm:disabled { opacity: 0.4; cursor: default; }
     .audio-delete-actions button:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+    #sound-hint {
+      position: fixed; left: 50%; bottom: 24px; z-index: 25; transform: translateX(-50%);
+      padding: 10px 16px; border-radius: 10px; background: #202020e6; color: #eee;
+      font: 13px/1.4 system-ui; pointer-events: none; backdrop-filter: blur(16px);
+    }
     #view-controls {
       position: fixed; right: 20px; bottom: 20px; z-index: 25;
       display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px;
@@ -167,6 +172,7 @@
   </section>
   <div id="audio-drop">Drop audio</div>
   <div id="audio-selection-hint" hidden>Drag to move · Scroll for depth</div>
+  <div id="sound-hint" hidden>Click anywhere to turn on sound</div>
   <div id="view-controls" role="group" aria-label="View controls">
     <p id="view-status" role="status"></p>
     <button id="view-reset" type="button" title="Return to the starting camera view">
@@ -446,6 +452,23 @@
     editLink.hidden = !localHost || editMode;
     document.querySelector("#audio-editor").hidden = !editMode;
     uploadButton.hidden = !editMode;
+    // Published viewer: no audio panel or orbs; sound starts on the first click or key press
+    // (browsers block audio until the visitor interacts with the page).
+    let viewerAudioStarted = false;
+    if (!editMode) {
+      audioPanel.style.display = "none";
+      orbsVisible = showOrbs.checked = false;
+      const soundHint = document.querySelector("#sound-hint");
+      soundHint.hidden = false;
+      const startViewerAudio = async () => {
+        if (viewerAudioStarted) return;
+        viewerAudioStarted = true;
+        for (const type of ["pointerup", "keydown", "touchend"]) removeEventListener(type, startViewerAudio, true);
+        soundHint.hidden = true;
+        await playAll.onclick();
+      };
+      for (const type of ["pointerup", "keydown", "touchend"]) addEventListener(type, startViewerAudio, true);
+    }
     const supportsFolderAccess = window.isSecureContext && typeof window.showDirectoryPicker === "function";
     if (editMode && !supportsFolderAccess) {
       connectButton.disabled = true;
@@ -695,6 +718,7 @@
       const source = { record, marker, sound, row, updatePlayButton };
       name.onclick = () => { if (canEdit()) selectSource(selectedSource === source ? null : source); };
       audioSources.set(record.id, source);
+      if (viewerAudioStarted) { sound.play(); updatePlayButton(); }
       updateSourceCount();
       marker.userData.source = source;
       audioList.appendChild(row);

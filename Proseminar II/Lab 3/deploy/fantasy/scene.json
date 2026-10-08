@@ -1,0 +1,58 @@
+{
+  "splats": [
+    {
+      "filename": "lab3-c.spz",
+      "transform": {
+        "translation": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": 1
+      }
+    }
+  ],
+  "metadata": {
+    "exportTimestamp": "2026-10-04T21:44:03.753Z",
+    "spzExportVersion": 2
+  },
+  "audio": [
+    {
+      "id": "f0b8b8bf-0b35-4855-b822-4e4b0e180c64",
+      "filename": "audio-f0b8b8bf-0b35-4855-b822-4e4b0e180c64.mp3",
+      "name": "freesound_community-medieval-75892.mp3",
+      "position": [
+        -1.6476607976871276,
+        1.3414131779969776,
+        4.4298817444011815
+      ],
+      "loop": true,
+      "volume": 0.51,
+      "color": 16769685
+    },
+    {
+      "id": "30afb512-c34b-4d22-9f98-fc4463f1d727",
+      "filename": "audio-30afb512-c34b-4d22-9f98-fc4463f1d727.mp3",
+      "name": "freesound_community-medieval-music-played-at-town-plaza-67728.mp3",
+      "position": [
+        -2.873509718459432,
+        0.9504025737590941,
+        -4.152630672682487
+      ],
+      "loop": true,
+      "volume": 0.97,
+      "color": 15701503
+    }
+  ]
+}

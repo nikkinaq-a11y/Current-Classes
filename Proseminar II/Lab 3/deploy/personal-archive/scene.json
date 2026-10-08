@@ -1,0 +1,58 @@
+{
+  "splats": [
+    {
+      "filename": "autumn-mountain-valley-panorama.spz",
+      "transform": {
+        "translation": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          -180,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": 1
+      }
+    }
+  ],
+  "metadata": {
+    "exportTimestamp": "2026-10-04T21:49:16.736Z",
+    "spzExportVersion": 2
+  },
+  "audio": [
+    {
+      "id": "14330788-5f9d-429c-8e59-e8ec1bbe892b",
+      "filename": "audio-14330788-5f9d-429c-8e59-e8ec1bbe892b.mp3",
+      "name": "creatorshome-mountain-wind-371074.mp3",
+      "position": [
+        0.1119483703721964,
+        -0.3922832942829153,
+        -0.767721771783686
+      ],
+      "loop": true,
+      "volume": 0.34,
+      "color": 9830323
+    },
+    {
+      "id": "64b291fa-904f-4e5e-882c-cbd75d6a387d",
+      "filename": "audio-64b291fa-904f-4e5e-882c-cbd75d6a387d.mp3",
+      "name": "dbsound-forest-path-avala-mountains-246781.mp3",
+      "position": [
+        -0.9475553435889498,
+        0.09833798488886925,
+        1.156205441468145
+      ],
+      "loop": true,
+      "volume": 0.87,
+      "color": 13959061
+    }
+  ]
+}

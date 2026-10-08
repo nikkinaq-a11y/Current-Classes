@@ -1,0 +1,30 @@
+{
+  "splats": [
+    {
+      "filename": "rustic-garden-path-landscape-painting.spz",
+      "transform": {
+        "translation": [
+          0,
+          4.577,
+          13.74
+        ],
+        "rotation": [
+          -180,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": 3.048
+      }
+    }
+  ],
+  "metadata": {
+    "exportTimestamp": "2026-10-04T21:50:14.967Z",
+    "spzExportVersion": 2
+  }
+}

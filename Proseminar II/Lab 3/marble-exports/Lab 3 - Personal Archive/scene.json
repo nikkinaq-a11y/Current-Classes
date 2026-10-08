@@ -4,12 +4,12 @@
       "filename": "autumn-mountain-valley-panorama.spz",
       "transform": {
         "translation": [
-          0,
-          0.8713897466659546,
-          0
+          0.125,
+          4.967,
+          9.745
         ],
         "rotation": [
-          180,
+          -180,
           0,
           0
         ],
@@ -17,14 +17,14 @@
           1,
           0,
           0,
-          6.123233995736766e-17
+          0
         ],
-        "scale": 2.131192922592163
+        "scale": 1
       }
     }
   ],
   "metadata": {
-    "exportTimestamp": "2026-10-03T18:51:50.124Z",
-    "spzExportVersion": 3
+    "exportTimestamp": "2026-10-04T21:49:16.736Z",
+    "spzExportVersion": 2
   }
 }

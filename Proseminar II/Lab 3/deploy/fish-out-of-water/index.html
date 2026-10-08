@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spark • Marble Starter</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    canvas {
+      touch-action: none;
+    }
+    [hidden] { display: none !important; }
+    #audio-panel {
+      position: fixed; left: 20px; bottom: 20px; z-index: 20;
+      width: 292px; max-width: calc(100vw - 40px); max-height: 60vh;
+      display: flex; flex-direction: column; box-sizing: border-box;
+      border: 1px solid #ffffff24; border-radius: 16px;
+      background: #202020f2; color: #eee; font: 13px/1.4 system-ui;
+      color-scheme: dark; accent-color: #ddd;
+      box-shadow: 0 12px 40px #0005; backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+    .audio-header { display: flex; align-items: center; gap: 8px; padding: 16px; }
+    #audio-panel h2 { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: -0.2px; }
+    #audio-count { color: #999; font-size: 11px; background: #ffffff0c; padding: 2px 6px; border-radius: 5px; }
+    #audio-panel button {
+      cursor: pointer; border: 1px solid transparent; border-radius: 7px;
+      background: #ffffff0c; color: #ddd; font: inherit;
+      transition: background 120ms, border-color 120ms;
+    }
+    #audio-panel button:hover { background: #ffffff18; color: #fff; }
+    #audio-panel #audio-upload {
+      margin-left: auto; padding: 6px 11px; background: #e5e5e5; color: #222;
+      font-size: 12px; font-weight: 600;
+    }
+    #audio-panel #audio-upload:hover { background: #fff; }
+    .audio-transport { display: flex; gap: 6px; padding: 0 16px 12px; }
+    #audio-panel .audio-transport button { flex: 1; padding: 6px 10px; font-size: 12px; border-color: #ffffff14; }
+    .audio-visibility { padding: 0 16px 12px; color: #bbb; font-size: 12px; }
+    .audio-visibility label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .audio-visibility input { margin: 0; }
+    #audio-panel button:disabled { opacity: 0.35; cursor: default; }
+    #audio-panel :focus-visible { outline: 2px solid #ddd; outline-offset: 2px; }
+    #audio-status { margin: 0; padding: 0 16px 12px; color: #bbb; font-size: 12px; overflow-wrap: anywhere; }
+    #audio-status:empty { display: none; }
+    #audio-list { overflow-y: auto; min-height: 0; padding: 0 10px 10px; scrollbar-width: thin; scrollbar-color: #555 transparent; }
+    #audio-list:empty::after {
+      content: "No audio in this scene"; display: block; text-align: center; color: #888;
+      padding: 26px 12px; border: 1px dashed #ffffff24; border-radius: 9px;
+    }
+    .audio-source { padding: 10px; border: 1px solid #ffffff0c; border-radius: 10px; background: #ffffff04; }
+    .audio-source + .audio-source { margin-top: 7px; }
+    .audio-source.selected { border-color: #888; background: #ffffff0a; }
+    .audio-source-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    #audio-panel .audio-name { min-width: 0; flex: 1; padding: 3px 0; text-align: left; background: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+    #audio-panel .remove { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; background: none; color: #888; flex-shrink: 0; }
+    #audio-panel .remove svg { width: 20px; height: 20px; }
+    #audio-panel .remove:hover { background: #ffffff10; color: #fff; }
+    .audio-actions { display: flex; gap: 8px; align-items: center; }
+    #audio-panel .play { min-width: 62px; padding: 5px 10px; border-color: #ffffff14; font-size: 12px; }
+    #audio-panel .play[aria-pressed="true"] { background: #ddd; color: #222; }
+    .audio-loop { display: flex; align-items: center; gap: 5px; margin-left: auto; color: #aaa; font-size: 11px; cursor: pointer; }
+    .audio-loop input { margin: 0; width: 13px; height: 13px; }
+    .audio-volume { display: flex; gap: 8px; align-items: center; margin-top: 12px; color: #888; }
+    .audio-volume svg { flex-shrink: 0; }
+    .audio-volume input { min-width: 0; flex: 1; height: 14px; margin: 0; cursor: pointer; }
+    .audio-volume output { min-width: 30px; text-align: right; font-size: 10px; font-variant-numeric: tabular-nums; }
+    .audio-footer { padding: 10px 16px; border-top: 1px solid #ffffff0c; color: #888; font-size: 10px; text-align: center; }
+    #audio-editor { padding: 0 16px 12px; }
+    #audio-editor button { padding: 6px 10px; }
+    #editor-status { margin: 8px 0 0; color: #bbb; font-size: 12px; overflow-wrap: anywhere; }
+    #audio-limits { margin: 8px 0 0; color: #999; font-size: 11px; }
+    #audio-edit-link { margin-left: auto; color: #bbb; font-size: 12px; }
+    #audio-panel.editing #audio-list:empty::after { content: "Drop audio here"; }
+    #audio-selection-hint {
+      position: fixed; z-index: 15; pointer-events: none;
+      padding: 5px 8px; border: 1px solid #666; border-radius: 5px;
+      background: #242424ee; color: #eee; font: 12px/1.4 system-ui;
+      white-space: nowrap; transform: translate(-50%, -100%);
+    }
+    #audio-drop {
+      display: none; position: fixed; inset: 12px; z-index: 30;
+      border: 2px dashed #aaa; border-radius: 12px; background: #222b;
+      color: white; font: 24px system-ui; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    #audio-delete-dialog {
+      width: 360px; max-width: calc(100vw - 64px); padding: 24px;
+      border: 1px solid #ffffff24; border-radius: 16px;
+      background: #202020; color: #eee; color-scheme: dark; font: 13px/1.5 system-ui;
+      box-shadow: 0 12px 40px #0008;
+    }
+    #audio-delete-dialog::backdrop { background: #0009; }
+    #audio-delete-dialog h2 { margin: 0 0 12px; font-size: 18px; }
+    #audio-delete-dialog p { color: #bbb; overflow-wrap: anywhere; }
+    .audio-delete-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+    .audio-delete-actions button {
+      padding: 8px 14px; border: 1px solid #ffffff24; border-radius: 7px;
+      background: #ffffff0c; color: #eee; font: inherit; cursor: pointer;
+    }
+    #audio-delete-confirm { background: #bd3535; border-color: #bd3535; color: white; }
+    #audio-delete-confirm:disabled { opacity: 0.4; cursor: default; }
+    .audio-delete-actions button:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+    #sound-hint {
+      position: fixed; left: 50%; bottom: 24px; z-index: 25; transform: translateX(-50%);
+      padding: 10px 16px; border-radius: 10px; background: #202020e6; color: #eee;
+      font: 13px/1.4 system-ui; pointer-events: none; backdrop-filter: blur(16px);
+    }
+    #view-controls {
+      position: fixed; right: 20px; bottom: 20px; z-index: 25;
+      display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px;
+      max-width: calc(100vw - 40px); color: #eee; font: 12px/1.4 system-ui;
+    }
+    #view-controls button {
+      display: inline-flex; align-items: center; gap: 7px; padding: 10px 13px;
+      border: 1px solid #ffffff24; border-radius: 10px; background: #202020f2;
+      color: #eee; font: inherit; cursor: pointer; box-shadow: 0 6px 24px #0004;
+      backdrop-filter: blur(16px);
+    }
+    #view-controls button:hover { background: #383838; }
+    #view-controls button:disabled { opacity: 0.45; cursor: default; }
+    #view-controls button:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+    #view-controls svg { width: 16px; height: 16px; }
+    #view-status { flex-basis: 100%; max-width: 300px; margin: 0; padding: 8px; background: #202020; border-radius: 7px; }
+    #view-status:empty { display: none; }
+    /* Includes the audio panel, Settings, performance stats, and Spark's XR button. */
+    body > :not(canvas):not(script):not(dialog) { transition: opacity 350ms ease; }
+    body.ui-hidden > :not(canvas):not(script):not(dialog):not(#view-controls) {
+      opacity: 0 !important; visibility: hidden; pointer-events: none !important;
+    }
+    body.ui-hidden #view-controls > :not(#view-hide-ui) { display: none; }
+    body.ui-hidden #view-hide-ui { opacity: 0.35; padding: 8px 11px; transition: opacity 150ms ease; }
+    body.ui-hidden #view-hide-ui:hover,
+    body.ui-hidden #view-hide-ui:focus-visible { opacity: 1; }
+    @media (max-width: 620px) {
+      #audio-panel { bottom: 120px; max-height: calc(100dvh - 154px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body > :not(canvas):not(script):not(dialog) { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <section id="audio-panel" aria-label="Audio sources">
+    <div class="audio-header">
+      <h2>Audio</h2><span id="audio-count" aria-label="Source count">0</span>
+      <a id="audio-edit-link" href="?edit=1" hidden>Local edit</a>
+      <button id="audio-upload" type="button" aria-label="Add audio" hidden disabled>+ Add</button>
+    </div>
+    <div id="audio-editor" hidden>
+      <button id="audio-connect" type="button">Connect project folder</button>
+      <button id="audio-retry" type="button" hidden>Retry save / cleanup</button>
+      <p id="editor-status" role="status">Connect the folder containing index.html and scene.json to move or edit audio. Reconnect after each page reload.</p>
+      <p id="audio-limits">Up to 10 audio sources · 5 MB per file</p>
+    </div>
+    <div class="audio-transport">
+      <button id="audio-play-all" type="button" disabled>Play all</button>
+      <button id="audio-pause-all" type="button" disabled>Pause all</button>
+    </div>
+    <div class="audio-visibility">
+      <label><input id="audio-show-orbs" type="checkbox" checked> Show orbs</label>
+    </div>
+    <input id="audio-files" type="file" accept="audio/*" multiple hidden>
+    <p id="audio-status" role="status">Loading…</p>
+    <div id="audio-list"></div>
+    <div class="audio-footer">Play to listen · Explore the scene</div>
+  </section>
+  <div id="audio-drop">Drop audio</div>
+  <div id="audio-selection-hint" hidden>Drag to move · Scroll for depth</div>
+  <div id="sound-hint" hidden>Click anywhere to turn on sound</div>
+  <div id="view-controls" role="group" aria-label="View controls">
+    <p id="view-status" role="status"></p>
+    <button id="view-reset" type="button" title="Return to the starting camera view">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2.5 7M3 4v7h7"/></svg>
+      Reset view
+    </button>
+    <button id="view-hide-ui" type="button" aria-pressed="false" aria-keyshortcuts="H" title="Hide the interface (H)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path d="m3 3 18 18"/></svg>
+      <span>Hide UI</span>
+    </button>
+    <button id="view-fullscreen" type="button" aria-pressed="false" title="Enter fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg>
+      <span>Fullscreen</span>
+    </button>
+  </div>
+  <dialog id="audio-delete-dialog" aria-labelledby="audio-delete-title" aria-describedby="audio-delete-message audio-delete-warning">
+    <form method="dialog">
+      <h2 id="audio-delete-title">Delete audio?</h2>
+      <p id="audio-delete-message"></p>
+      <p id="audio-delete-warning">Its audio file will also be permanently deleted unless another scene asset uses it. This cannot be undone.</p>
+      <div class="audio-delete-actions">
+        <button type="submit" value="cancel" autofocus>Cancel</button>
+        <button id="audio-delete-confirm" type="submit" value="delete">Delete audio</button>
+      </div>
+    </form>
+  </dialog>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.180.0/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+        "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.20.0/+esm",
+        "@sparkjsdev/spark": "./spark.module.min.js"
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/stats.js@0.17.0/build/stats.min.js"></script>
+  <script type="module">
+    import * as THREE from "three";
+    import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+    import { SparkRenderer, SplatMesh, SparkControls, SparkXr, utils } from "@sparkjsdev/spark";
+    import GUI from "lil-gui";
+
+    const RENDER_TIMEOUT_MS = 5 * 1000;
+    const URL_BASE = ".";
+
+    const scene = new THREE.Scene();
+    // Soft lighting gives the audio meshes a rounded, three-dimensional shape.
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x454545, 2));
+    const orbLight = new THREE.DirectionalLight(0xffffff, 3);
+    orbLight.position.set(3, 5, 4);
+    scene.add(orbLight);
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Make a local frame of reference that we can move to control
+    // the camera, or as a frame of reference in WebXR mode
+    const localFrame = new THREE.Group();
+    scene.add(localFrame);
+
+    // Lower the splat rendering width to sqrt(5) std devs for more performance
+    const spark = new SparkRenderer({
+      renderer,
+      maxStdDev: Math.sqrt(5),
+    });
+    scene.add(spark);
+    localFrame.add(camera);
+
+    const stats = new Stats();
+    document.body.appendChild(stats.dom);
+
+    const gui = new GUI({ title: "Settings" });
+
+    const sceneManifest = await fetch(`${URL_BASE}/scene.json`, { cache: "no-store" }).then((response) => {
+      if (!response.ok) throw new Error(`Could not load scene.json (${response.status})`);
+      return response.json();
+    });
+    const splats = sceneManifest.splats ?? [];
+    const meshes = sceneManifest.meshes ?? [];
+
+    // Load splats
+    for (const splat of splats) {
+      const splatMesh = new SplatMesh({ url: `${URL_BASE}/${splat.filename}`, lod: true });
+      splatMesh.position.fromArray(splat.transform?.translation ?? [0, 0, 0]);
+      splatMesh.quaternion.fromArray(splat.transform?.quaternion ?? [0, 0, 0, 1]);
+      const scale = splat.transform?.scale ?? 1;
+      splatMesh.scale.set(scale, scale, scale);
+      scene.add(splatMesh);
+    }
+
+    // Helper to extract albedo color and texture from any material
+    function extractAlbedoProperties(material) {
+      let color = new THREE.Color(0x888888);
+      let map = null;
+
+      if (material.color instanceof THREE.Color) {
+        color = material.color.clone();
+      }
+      if (material.map) {
+        map = material.map;
+      }
+
+      return { color, map };
+    }
+
+    // Convert mesh materials to MeshBasicMaterial (matches Marble's behavior)
+    function convertToBasicMaterials(object) {
+      object.traverse((child) => {
+        if (child.isMesh) {
+          const originalMaterial = child.material;
+          const originalMaterials = Array.isArray(originalMaterial)
+            ? originalMaterial
+            : [originalMaterial];
+
+          if (originalMaterials.length === 0) {
+            child.material = new THREE.MeshBasicMaterial({
+              color: 0x888888,
+              side: THREE.DoubleSide,
+            });
+          } else {
+            const newMaterials = originalMaterials.map((mat) => {
+              const { color, map } = extractAlbedoProperties(mat);
+              return new THREE.MeshBasicMaterial({
+                color: color,
+                map: map,
+                side: THREE.DoubleSide,
+              });
+            });
+
+            child.material = newMaterials.length === 1 ? newMaterials[0] : newMaterials;
+          }
+        }
+      });
+    }
+
+    // Load meshes (GLB/GLTF)
+    const gltfLoader = new GLTFLoader();
+    for (const mesh of meshes) {
+      try {
+        const gltf = await gltfLoader.loadAsync(`${URL_BASE}/${mesh.filename}`);
+        const model = gltf.scene;
+        // Convert to MeshBasicMaterial to not need lighting
+        convertToBasicMaterials(model);
+
+        model.position.fromArray(mesh.transform?.translation ?? [0, 0, 0]);
+        model.quaternion.fromArray(mesh.transform?.quaternion ?? [0, 0, 0, 1]);
+        const meshScale = mesh.transform?.scale ?? [1, 1, 1];
+        model.scale.set(meshScale[0], meshScale[1], meshScale[2]);
+        scene.add(model);
+      } catch (error) {
+        console.warn(`Failed to load mesh: ${mesh.filename}`, error);
+      }
+    }
+
+    window.THREE = THREE;
+    window.scene = scene;
+    window.renderer = renderer;
+
+    window.addEventListener("resize", onWindowResize, false);
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    let renderEnabled = true;
+    let lastMoved = 0;
+    const lastPos = new THREE.Vector3().setScalar(Number.NEGATIVE_INFINITY);
+    const lastDir = new THREE.Vector3();
+    const frameCameraPosition = new THREE.Vector3();
+    const frameCameraDirection = new THREE.Vector3();
+
+    const controls = new SparkControls({
+      canvas: renderer.domElement,
+    });
+    controls.pointerControls.reverseRotate = utils.isMobile();
+    gui.add(controls.pointerControls, "reverseRotate").name("Reverse look").listen();
+    controls.pointerControls.rotateSpeed *= 2.0;
+    controls.pointerControls.slideSpeed *= 0.75;
+
+    // Published audio comes from scene.json. Only an explicitly connected local editor can write.
+    const audioPanel = document.querySelector("#audio-panel");
+    const audioCount = document.querySelector("#audio-count");
+    const audioFooter = document.querySelector(".audio-footer");
+    const audioLimits = document.querySelector("#audio-limits");
+    const audioStatus = document.querySelector("#audio-status");
+    const audioList = document.querySelector("#audio-list");
+    const fileInput = document.querySelector("#audio-files");
+    const dropOverlay = document.querySelector("#audio-drop");
+    const listener = new THREE.AudioListener();
+    camera.add(listener);
+    const audioSources = new Map();
+    const deleteDialog = document.querySelector("#audio-delete-dialog");
+    const deleteConfirm = document.querySelector("#audio-delete-confirm");
+    const deleteMessage = document.querySelector("#audio-delete-message");
+    // Keep dialog key presses out of scene navigation, but let releases clear held keys.
+    deleteDialog.addEventListener("keydown", event => event.stopPropagation());
+    let orbsVisible = true;
+    const showOrbs = document.querySelector("#audio-show-orbs");
+    showOrbs.onchange = () => {
+      finishDrag();
+      orbsVisible = showOrbs.checked;
+      if (!orbsVisible) selectSource(null);
+      for (const source of audioSources.values()) source.marker.visible = orbsVisible;
+      updateEditorControls();
+      wakeScene();
+    };
+    const playAll = document.querySelector("#audio-play-all");
+    const pauseAll = document.querySelector("#audio-pause-all");
+    function updateSourceCount() {
+      audioCount.textContent = audioSources.size;
+      playAll.disabled = pauseAll.disabled = audioSources.size === 0;
+    }
+    playAll.onclick = async () => {
+      try {
+        await listener.context.resume();
+        wakeScene();
+        scene.updateMatrixWorld(true);
+        for (const source of audioSources.values()) {
+          if (!source.sound.isPlaying) source.sound.play();
+          source.updatePlayButton();
+        }
+      } catch (error) {
+        audioStatus.textContent = "Playback failed: " + error.message;
+      }
+    };
+    pauseAll.onclick = () => {
+      for (const source of audioSources.values()) {
+        if (source.sound.isPlaying) source.sound.pause();
+        source.updatePlayButton();
+      }
+    };
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let dragging = null;
+    let selectedSource = null;
+    const selectionHint = document.querySelector("#audio-selection-hint");
+    const selectionOutline = new THREE.Mesh(
+      new THREE.SphereGeometry(0.132, 32, 24),
+      new THREE.MeshBasicMaterial({
+        color: 0xffffff, side: THREE.BackSide, depthWrite: false, toneMapped: false
+      })
+    );
+    const hintPosition = new THREE.Vector3();
+    const hintCameraRotation = new THREE.Quaternion();
+
+    function updateSelectionHint() {
+      selectionHint.hidden = true;
+      if (!orbsVisible || !canEdit() || !selectedSource || renderer.xr.isPresenting) return;
+      // Anchor just above the orb in screen space, following camera movement.
+      hintPosition.set(0, 0.2, 0)
+        .applyQuaternion(camera.getWorldQuaternion(hintCameraRotation))
+        .add(selectedSource.marker.position).project(camera);
+      if (Math.abs(hintPosition.x) > 1 || Math.abs(hintPosition.y) > 1 ||
+          Math.abs(hintPosition.z) > 1) return;
+      const bounds = renderer.domElement.getBoundingClientRect();
+      selectionHint.hidden = false;
+      const halfWidth = selectionHint.offsetWidth / 2 + 8;
+      const x = bounds.left + (hintPosition.x + 1) * bounds.width / 2;
+      const y = bounds.top + (1 - hintPosition.y) * bounds.height / 2;
+      selectionHint.style.left = `${Math.max(halfWidth, Math.min(innerWidth - halfWidth, x))}px`;
+      selectionHint.style.top = `${Math.max(selectionHint.offsetHeight + 8, y)}px`;
+    }
+    const localHost = ["localhost", "127.0.0.1"].includes(location.hostname);
+    const editMode = localHost && new URLSearchParams(location.search).get("edit") === "1";
+    const editorStatus = document.querySelector("#editor-status");
+    const connectButton = document.querySelector("#audio-connect");
+    const retryButton = document.querySelector("#audio-retry");
+    const uploadButton = document.querySelector("#audio-upload");
+    const editLink = document.querySelector("#audio-edit-link");
+    const editURL = new URL(location.href);
+    editURL.searchParams.set("edit", "1");
+    editLink.href = editURL.href;
+    editLink.hidden = !localHost || editMode;
+    document.querySelector("#audio-editor").hidden = !editMode;
+    uploadButton.hidden = !editMode;
+    // Published viewer: no audio panel or orbs; sound starts on the first click or key press
+    // (browsers block audio until the visitor interacts with the page).
+    let viewerAudioStarted = false;
+    if (!editMode) {
+      audioPanel.style.display = "none";
+      orbsVisible = showOrbs.checked = false;
+      const soundHint = document.querySelector("#sound-hint");
+      soundHint.hidden = false;
+      const startViewerAudio = async () => {
+        if (viewerAudioStarted) return;
+        viewerAudioStarted = true;
+        for (const type of ["pointerup", "keydown", "touchend"]) removeEventListener(type, startViewerAudio, true);
+        soundHint.hidden = true;
+        await playAll.onclick();
+      };
+      for (const type of ["pointerup", "keydown", "touchend"]) addEventListener(type, startViewerAudio, true);
+    }
+    const supportsFolderAccess = window.isSecureContext && typeof window.showDirectoryPicker === "function";
+    if (editMode && !supportsFolderAccess) {
+      connectButton.disabled = true;
+      editorStatus.textContent = "Local editing requires desktop Chrome or Edge on localhost or 127.0.0.1.";
+    }
+    // Keep even unloadable records, so saving another source never silently drops them.
+    let audioRecords = structuredClone(sceneManifest.audio ?? []);
+    if (!Array.isArray(audioRecords)) throw new Error("scene.json audio must be an array");
+    let projectFolder = null;
+    let manifestHandle = null;
+    let manifestText = "";
+    let busy = false;
+    let changingFiles = false;
+    let editRevision = 0;
+    let dirty = false;
+    let saveError = false;
+    let saveTimer = null;
+    let pendingRemoval = null;
+    const pendingDeletes = new Set();
+    const MAX_AUDIO_SOURCES = 10;
+    const MAX_AUDIO_BYTES = 5_000_000;
+    const AUTOSAVE_DELAY_MS = 300;
+    const sourceLimitMessage = `${MAX_AUDIO_SOURCES}-source limit reached. Remove a source to add another.`;
+    const audioExtension = /\.(mp3|wav|ogg|oga|m4a|aac|flac|opus|aiff|aif|webm|mp4|weba)$/i;
+
+    function canEdit() { return editMode && !!projectFolder && !changingFiles; }
+    function canChangeFiles() { return canEdit() && !busy && !saveError; }
+
+    function updateEditorControls() {
+      const editable = canEdit();
+      const editHint = !editMode ? "Play to listen · Explore the scene"
+        : !supportsFolderAccess ? "Editing unavailable in this browser"
+        : !projectFolder ? "Connect project folder to unlock editing"
+        : changingFiles ? "Updating audio files…"
+        : saveError ? "Changes kept in this tab · Retry to save"
+        : "Autosave on · Drag to move · Scroll for depth";
+      const atSourceLimit = audioRecords.length >= MAX_AUDIO_SOURCES;
+      uploadButton.disabled = !canChangeFiles() || atSourceLimit;
+      deleteConfirm.disabled = !canChangeFiles();
+      uploadButton.title = !editable ? editHint : atSourceLimit
+        ? sourceLimitMessage
+        : "Add audio files (up to 5 MB each)";
+      audioLimits.textContent = `${audioRecords.length}/${MAX_AUDIO_SOURCES} audio sources · 5 MB per file`;
+      audioPanel.classList.toggle("editing", editable);
+      audioFooter.textContent = editHint;
+      connectButton.disabled = !supportsFolderAccess || busy || !!projectFolder;
+      retryButton.hidden = !saveError;
+      retryButton.disabled = busy;
+      for (const row of audioList.children) {
+        const name = row.querySelector(".audio-name");
+        if (name) {
+          name.disabled = !editable || !orbsVisible;
+          name.title = !editable ? editHint : !orbsVisible ? "Show orbs to select and move audio"
+            : "Select audio, then drag its orb to move it";
+        }
+        const remove = row.querySelector(".remove");
+        if (remove) {
+          remove.hidden = !editMode;
+          remove.disabled = !canChangeFiles();
+        }
+        const loopLabel = row.querySelector(".audio-loop");
+        if (loopLabel) loopLabel.hidden = !editMode;
+        const loop = row.querySelector(".loop");
+        if (loop) loop.disabled = !editable;
+        const volume = row.querySelector("input[type=range]");
+        if (volume) volume.disabled = editMode && !editable;
+      }
+      updateSelectionHint();
+    }
+    function wakeScene() {
+      lastMoved = performance.now();
+      renderEnabled = true;
+    }
+    function validAudioFilename(filename) {
+      return typeof filename === "string" && !/[\/\\\x00-\x1f]/.test(filename) && audioExtension.test(filename);
+    }
+    async function writeFile(handle, contents) {
+      const writable = await handle.createWritable();
+      try {
+        await writable.write(contents);
+        await writable.close();
+      } catch (error) {
+        await writable.abort().catch(() => {});
+        throw error;
+      }
+    }
+    async function checkManifest() {
+      const current = await (await manifestHandle.getFile()).text();
+      if (current !== manifestText) {
+        throw new Error("scene.json changed outside this editor. Keep this tab open and resolve the disk changes before retrying, or reload to use the disk version.");
+      }
+    }
+    async function commitManifest(records = audioRecords) {
+      // Read before every write; preserve all non-audio fields and reject outside edits.
+      const revision = editRevision;
+      const manifest = JSON.parse(manifestText);
+      manifest.audio = records;
+      // Snapshot before awaiting disk access; later edits belong to the next save.
+      const nextText = JSON.stringify(manifest, null, 2) + "\n";
+      await checkManifest();
+      await writeFile(manifestHandle, nextText);
+      manifestText = nextText;
+      dirty = editRevision !== revision;
+    }
+    async function cleanupFiles() {
+      await checkManifest();
+      const manifest = JSON.parse(manifestText);
+      for (const filename of pendingDeletes) {
+        const referenced = [...(manifest.audio ?? []), ...(manifest.splats ?? []), ...(manifest.meshes ?? [])]
+          .some(record => record?.filename?.toLowerCase() === filename.toLowerCase());
+        if (!referenced) {
+          if (!validAudioFilename(filename)) throw new Error("Refusing to delete a non-audio file: " + filename);
+          try { await projectFolder.removeEntry(filename); }
+          catch (error) {
+            if (error.name !== "NotFoundError") throw new Error(`File remains on disk: ${filename}. ${error.message}`);
+          }
+        }
+        pendingDeletes.delete(filename);
+      }
+    }
+    // Disk writes are serialized; ordinary autosaves never lock movement or settings.
+    async function runEdit(operation, changesFiles = false) {
+      if (!editMode || !projectFolder || busy) return;
+      if (changesFiles) finishDrag();
+      clearTimeout(saveTimer);
+      busy = true;
+      changingFiles = changesFiles;
+      saveError = false;
+      editorStatus.textContent = "Saving…";
+      updateEditorControls();
+      try {
+        await operation();
+        await cleanupFiles();
+        editorStatus.textContent = dirty ? "Unsaved changes…" : "Saved · " + projectFolder.name;
+      } catch (error) {
+        saveError = true;
+        editorStatus.textContent = "Not finished: " + error.message;
+        console.warn(error);
+      } finally {
+        busy = false;
+        changingFiles = false;
+        updateEditorControls();
+        if (dirty && !saveError) scheduleSave();
+      }
+    }
+    function scheduleSave() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        // finishDrag() reschedules a pending save once the pointer is released.
+        if (canEdit() && !busy && !saveError && !dragging) void runEdit(() => commitManifest());
+      }, AUTOSAVE_DELAY_MS);
+    }
+    function saveSource(source) {
+      if (!editMode || !projectFolder || !audioRecords.includes(source.record)) return;
+      source.record.position = source.marker.position.toArray();
+      editRevision++;
+      dirty = true;
+      if (!saveError) editorStatus.textContent = "Unsaved changes…";
+      scheduleSave();
+    }
+    retryButton.onclick = async () => {
+      if (!editMode || !projectFolder || busy) return;
+      try {
+        // Request permission while still inside the user's click gesture.
+        if (await projectFolder.requestPermission({ mode: "readwrite" }) !== "granted") {
+          throw new Error("Folder write permission is required. Click Retry to grant access.");
+        }
+        await runEdit(async () => {
+          if (pendingRemoval) await commitRemoval(pendingRemoval.record, pendingRemoval.row);
+          else if (dirty) await commitManifest();
+        }, !!pendingRemoval || pendingDeletes.size > 0);
+      } catch (error) { editorStatus.textContent = error.message; }
+    };
+    window.addEventListener("beforeunload", event => {
+      if (dirty || busy || pendingRemoval || pendingDeletes.size) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    });
+
+    function updateRay(event) {
+      const bounds = renderer.domElement.getBoundingClientRect();
+      pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1,
+        -(event.clientY - bounds.top) / bounds.height * 2 + 1);
+      camera.updateWorldMatrix(true, false);
+      raycaster.setFromCamera(pointer, camera);
+    }
+
+    async function addSource(record, buffer) {
+      if (!buffer) {
+        if (!validAudioFilename(record.filename)) throw new Error("Expected an audio filename beside index.html");
+        const response = await fetch(`${URL_BASE}/${encodeURIComponent(record.filename)}`);
+        if (!response.ok) throw new Error(`Could not load ${record.filename} (${response.status})`);
+        buffer = await listener.context.decodeAudioData(await response.arrayBuffer());
+      }
+      record.name ??= record.filename;
+      record.position ??= [0, 0, -2];
+      record.volume ??= 0.8;
+      record.loop ??= true;
+      if (!Array.isArray(record.position) || record.position.length !== 3 || !record.position.every(Number.isFinite) ||
+          !Number.isFinite(record.volume) || record.volume < 0 || record.volume > 1 || typeof record.loop !== "boolean") {
+        throw new Error("Invalid audio position, volume, or loop setting");
+      }
+      record.color ??= new THREE.Color().setHSL(Math.random(), 1, 0.65).getHex();
+      const marker = new THREE.Mesh(
+        new THREE.SphereGeometry(0.12, 32, 24),
+        new THREE.MeshStandardMaterial({
+          color: record.color, roughness: 0.35, metalness: 0,
+          emissive: record.color, emissiveIntensity: 0.15
+        })
+      );
+      marker.position.fromArray(record.position);
+      marker.visible = orbsVisible;
+      const sound = new THREE.PositionalAudio(listener);
+      sound.setBuffer(buffer);
+      sound.setRefDistance(1);
+      sound.setRolloffFactor(1);
+      sound.setLoop(record.loop);
+      sound.setVolume(record.volume);
+      marker.add(sound);
+      scene.add(marker);
+
+      const row = document.createElement("div");
+      row.className = "audio-source";
+      row.innerHTML = `<div class="audio-source-head">
+        <button type="button" class="audio-name" aria-pressed="false"></button>
+        <button type="button" class="remove" aria-label="Remove audio" title="Remove">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 10v7m4-7v7"/></svg>
+        </button></div><div class="audio-actions">
+        <button type="button" class="play" aria-pressed="false">Play</button>
+        <label class="audio-loop"><input type="checkbox" class="loop"> Loop</label>
+        </div><label class="audio-volume">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M11 4L5 9H2v6h3l6 5zM15 8a6 6 0 010 8m3-11a10 10 0 010 14"/></svg>
+          <input type="range" min="0" max="1" step="0.01" aria-label="Volume"><output></output>
+        </label>`;
+      const name = row.querySelector(".audio-name");
+      name.textContent = record.name;
+      name.title = record.name;
+      name.setAttribute("aria-label", "Select " + record.name);
+      const play = row.querySelector(".play");
+      const loop = row.querySelector(".loop");
+      const volume = row.querySelector("input[type=range]");
+      loop.checked = record.loop;
+      volume.value = record.volume;
+      const volumeOutput = row.querySelector("output");
+      volumeOutput.textContent = Math.round(record.volume * 100) + "%";
+      const source = { record, marker, sound, row, updatePlayButton };
+      name.onclick = () => { if (canEdit()) selectSource(selectedSource === source ? null : source); };
+      audioSources.set(record.id, source);
+      if (viewerAudioStarted) { sound.play(); updatePlayButton(); }
+      updateSourceCount();
+      marker.userData.source = source;
+      audioList.appendChild(row);
+      const originalOnEnded = sound.onEnded.bind(sound);
+      function updatePlayButton() {
+        play.textContent = sound.isPlaying ? "Pause" : "Play";
+        play.setAttribute("aria-pressed", String(sound.isPlaying));
+      }
+      sound.onEnded = () => { originalOnEnded(); updatePlayButton(); };
+      play.onclick = async () => {
+        try {
+          await listener.context.resume();
+          if (!audioSources.has(record.id)) return;
+          if (sound.isPlaying) sound.pause();
+          else { wakeScene(); scene.updateMatrixWorld(true); sound.play(); }
+          updatePlayButton();
+        } catch (error) {
+          audioStatus.textContent = "Playback failed: " + error.message;
+        }
+      };
+      loop.onchange = () => {
+        if (!canEdit()) return;
+        record.loop = loop.checked;
+        sound.setLoop(record.loop);
+        saveSource(source);
+      };
+      volume.oninput = () => {
+        if (editMode && !canEdit()) return;
+        // Viewer volume affects playback only; the saved scene record stays unchanged.
+        sound.setVolume(Number(volume.value));
+        volumeOutput.textContent = Math.round(Number(volume.value) * 100) + "%";
+      };
+      volume.onchange = () => {
+        if (!canEdit()) return;
+        record.volume = Number(volume.value);
+        saveSource(source);
+      };
+      const remove = row.querySelector(".remove");
+      remove.title = "Remove source and delete its audio file";
+      remove.onclick = () => removeSource(record, row);
+      updateEditorControls();
+      wakeScene();
+      return source;
+    }
+
+    async function removeSource(record, row) {
+      if (!canChangeFiles() || deleteDialog.open) return;
+      finishDrag();
+      deleteMessage.textContent = `Remove “${record.name ?? record.filename}” from this scene?`;
+      deleteDialog.returnValue = "";
+      const confirmed = await new Promise(resolve => {
+        deleteDialog.addEventListener("close", () => resolve(deleteDialog.returnValue === "delete"), { once: true });
+        deleteDialog.showModal();
+      });
+      if (!confirmed || !canChangeFiles() || !audioRecords.includes(record)) return;
+      pendingRemoval = { record, row };
+      await runEdit(() => commitRemoval(record, row), true);
+    }
+    async function commitRemoval(record, row) {
+      const remaining = audioRecords.filter(item => item !== record);
+      // Save first: a failed manifest write must leave both the source and its file intact.
+      await commitManifest(remaining);
+      audioRecords = remaining;
+      pendingRemoval = null;
+      if (validAudioFilename(record.filename)) pendingDeletes.add(record.filename);
+      const source = audioSources.get(record.id);
+      if (source) {
+        if (selectedSource === source) selectSource(null);
+        if (source.sound.isPlaying) source.sound.stop();
+        source.sound.disconnect();
+        scene.remove(source.marker);
+        source.marker.geometry.dispose();
+        source.marker.material.dispose();
+        audioSources.delete(record.id);
+      }
+      row.remove();
+      updateSourceCount();
+      wakeScene();
+    }
+
+    const audioReady = (async () => {
+      let failed = 0;
+      const ids = new Set();
+      for (const record of audioRecords) {
+        try {
+          if (!record || typeof record.id !== "string" || !record.id || ids.has(record.id)) {
+            throw new Error("Audio records need unique IDs");
+          }
+          ids.add(record.id);
+          await addSource(record);
+        } catch (error) {
+          failed++;
+          console.warn("Could not load audio", record, error);
+          const row = document.createElement("div");
+          row.className = "audio-source";
+          const label = document.createElement("span");
+          label.textContent = `${record?.name ?? record?.filename ?? "Audio"}: ${error.message}`;
+          row.appendChild(label);
+          if (record && validAudioFilename(record.filename)) {
+            const remove = document.createElement("button");
+            remove.type = "button";
+            remove.className = "remove";
+            remove.textContent = "×";
+            remove.setAttribute("aria-label", "Remove unavailable audio");
+            remove.title = "Remove source and delete its audio file";
+            remove.onclick = () => removeSource(record, row);
+            row.appendChild(remove);
+          }
+          audioList.appendChild(row);
+        }
+      }
+      audioStatus.textContent = failed ? `${failed} audio source(s) could not load. Their scene entries are preserved.` : "";
+      updateEditorControls();
+    })();
+
+    connectButton.onclick = async () => {
+      if (!editMode || busy || projectFolder || !supportsFolderAccess) return;
+      busy = true;
+      updateEditorControls();
+      try {
+        const folder = await window.showDirectoryPicker({ id: "marble-project", mode: "readwrite" });
+        await audioReady;
+        await folder.getFileHandle("index.html");
+        const handle = await folder.getFileHandle("scene.json");
+        const contents = await (await handle.getFile()).text();
+        if (JSON.stringify(JSON.parse(contents)) !== JSON.stringify(sceneManifest)) {
+          throw new Error("This folder does not match the loaded scene. Select the folder served at this URL, or reload if scene.json changed.");
+        }
+        // Reject ambiguous IDs before allowing destructive actions.
+        const ids = new Set();
+        for (const record of audioRecords) {
+          if (!record || typeof record.id !== "string" || !record.id || ids.has(record.id) || !validAudioFilename(record.filename)) {
+            throw new Error("Each audio entry needs a unique ID and an audio filename beside index.html.");
+          }
+          ids.add(record.id);
+        }
+        projectFolder = folder;
+        manifestHandle = handle;
+        manifestText = contents;
+        connectButton.textContent = "Folder connected";
+        editorStatus.textContent = "Connected · " + folder.name + " · Changes save automatically.";
+      } catch (error) {
+        editorStatus.textContent = error.name === "AbortError"
+          ? "Folder selection cancelled. Connect a folder to edit."
+          : "Could not connect: " + error.message;
+      } finally {
+        busy = false;
+        updateEditorControls();
+      }
+    };
+
+    async function uploadFiles(files) {
+      if (!canChangeFiles()) return;
+      if (audioRecords.length >= MAX_AUDIO_SOURCES) {
+        audioStatus.textContent = sourceLimitMessage;
+        return;
+      }
+      files = Array.from(files);
+      listener.context.resume().catch(() => {});
+      camera.updateWorldMatrix(true, false);
+      const position = camera.getWorldPosition(new THREE.Vector3())
+        .addScaledVector(camera.getWorldDirection(new THREE.Vector3()), 2);
+      const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.getWorldQuaternion(new THREE.Quaternion()));
+      await runEdit(async () => {
+        const skipped = [];
+        for (const [index, file] of files.entries()) {
+          // Validate before decoding or creating a file, including each item in a batch.
+          if (audioRecords.length >= MAX_AUDIO_SOURCES) {
+            skipped.push(`${file.name}: ${MAX_AUDIO_SOURCES}-source limit reached`);
+            continue;
+          }
+          if (file.size > MAX_AUDIO_BYTES) {
+            skipped.push(`${file.name}: exceeds the 5 MB per-file limit`);
+            continue;
+          }
+          if (!audioExtension.test(file.name)) { skipped.push(`${file.name}: unsupported audio`); continue; }
+          let buffer;
+          try { buffer = await listener.context.decodeAudioData(await file.arrayBuffer()); }
+          catch { skipped.push(`${file.name}: unsupported audio`); continue; }
+          await checkManifest();
+          const id = crypto.randomUUID();
+          const filename = `audio-${id}${file.name.match(audioExtension)[0].toLowerCase()}`;
+          try {
+            await projectFolder.getFileHandle(filename);
+            throw new Error("Filename already exists. Try adding the file again.");
+          } catch (error) { if (error.name !== "NotFoundError") throw error; }
+          const handle = await projectFolder.getFileHandle(filename, { create: true });
+          pendingDeletes.add(filename); // Clean up a partial import if writing fails.
+          await writeFile(handle, file);
+          const record = {
+            id, filename, name: file.name,
+            position: position.clone().addScaledVector(right, index * 0.25).toArray(),
+            loop: true, volume: 0.8
+          };
+          await addSource(record, buffer);
+          audioRecords.push(record);
+          pendingDeletes.delete(filename);
+          dirty = true;
+          await commitManifest();
+        }
+        // Also flush any position change made just before an import.
+        if (dirty) await commitManifest();
+        audioStatus.textContent = skipped.length ? "Skipped — " + skipped.join("; ") : "";
+      }, true);
+    }
+    uploadButton.onclick = () => { if (canChangeFiles()) fileInput.click(); };
+    fileInput.onchange = () => {
+      void uploadFiles(fileInput.files);
+      fileInput.value = "";
+    };
+    let dragDepth = 0;
+    window.addEventListener("dragenter", event => {
+      if (!Array.from(event.dataTransfer.types).includes("Files")) return;
+      event.preventDefault();
+      if (!canChangeFiles()) return;
+      dragDepth++;
+      dropOverlay.style.display = "flex";
+    });
+    window.addEventListener("dragover", event => {
+      if (Array.from(event.dataTransfer.types).includes("Files")) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = canChangeFiles() ? "copy" : "none";
+      }
+    });
+    window.addEventListener("dragleave", () => {
+      dragDepth = Math.max(0, dragDepth - 1);
+      if (!dragDepth) dropOverlay.style.display = "none";
+    });
+    window.addEventListener("drop", event => {
+      event.preventDefault();
+      dragDepth = 0;
+      dropOverlay.style.display = "none";
+      uploadFiles(event.dataTransfer.files);
+    });
+
+    // Capture marker gestures before Spark's camera controls receive them.
+    const canvas = renderer.domElement;
+    function selectSource(source) {
+      if (source && !orbsVisible) return;
+      selectionOutline.removeFromParent();
+      if (selectedSource) selectedSource.marker.scale.setScalar(1);
+      selectedSource = source;
+      for (const item of audioSources.values()) {
+        item.row.classList.toggle("selected", item === source);
+        item.row.querySelector(".audio-name").setAttribute("aria-pressed", String(item === source));
+      }
+      if (source) {
+        source.marker.scale.setScalar(1.2);
+        source.marker.add(selectionOutline);
+      }
+      updateSelectionHint();
+      wakeScene();
+    }
+    window.addEventListener("keydown", event => {
+      if (event.key === "Escape") { finishDrag(); selectSource(null); }
+    });
+    canvas.addEventListener("pointerdown", event => {
+      cancelCameraReset();
+      if (!orbsVisible || !canEdit() || event.button !== 0 || dragging) return;
+      updateRay(event);
+      scene.updateMatrixWorld(true);
+      const hit = raycaster.intersectObjects(Array.from(audioSources.values(), source => source.marker), false)[0];
+      if (!hit) { selectSource(null); return; }
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const source = hit.object.userData.source;
+      selectSource(source);
+      const normal = camera.getWorldDirection(new THREE.Vector3());
+      const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(normal, source.marker.position);
+      const point = raycaster.ray.intersectPlane(plane, new THREE.Vector3());
+      if (!point) return;
+      dragging = { source, plane, normal, offset: source.marker.position.clone().sub(point), pointerId: event.pointerId };
+      canvas.setPointerCapture(event.pointerId);
+      canvas.style.cursor = "grabbing";
+      wakeScene();
+    }, true);
+    canvas.addEventListener("pointermove", event => {
+      if (!dragging || event.pointerId !== dragging.pointerId) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      updateRay(event);
+      const point = raycaster.ray.intersectPlane(dragging.plane, new THREE.Vector3());
+      if (point) dragging.source.marker.position.copy(point).add(dragging.offset);
+      wakeScene();
+    }, true);
+    function finishDrag(save = true) {
+      if (!dragging) return;
+      const { source, pointerId } = dragging;
+      dragging = null;
+      if (canvas.hasPointerCapture(pointerId)) canvas.releasePointerCapture(pointerId);
+      canvas.style.cursor = "";
+      if (save) saveSource(source);
+      wakeScene();
+    }
+    for (const type of ["pointerup", "pointercancel", "lostpointercapture"]) {
+      canvas.addEventListener(type, event => {
+        if (!dragging || event.pointerId !== dragging.pointerId) return;
+        event.stopImmediatePropagation();
+        finishDrag();
+      }, true);
+    }
+    canvas.addEventListener("wheel", event => {
+      cancelCameraReset();
+      const source = selectedSource;
+      if (!orbsVisible || !canEdit() || !source) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const cameraPosition = camera.getWorldPosition(new THREE.Vector3());
+      const direction = source.marker.position.clone().sub(cameraPosition);
+      const distance = direction.length();
+      if (distance < 0.001) return;
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
+      const nextDistance = THREE.MathUtils.clamp(distance * Math.exp(THREE.MathUtils.clamp(delta * 0.002, -1, 1)), 0.2, 100);
+      source.marker.position.copy(cameraPosition).addScaledVector(direction, nextDistance / distance);
+      if (dragging) {
+        dragging.plane.setFromNormalAndCoplanarPoint(dragging.normal, source.marker.position);
+        updateRay(event);
+        const point = raycaster.ray.intersectPlane(dragging.plane, new THREE.Vector3());
+        if (point) dragging.offset.copy(source.marker.position).sub(point);
+      }
+      saveSource(source);
+      wakeScene();
+    }, { capture: true, passive: false });
+
+    // View controls affect this visit only; they never write to scene.json.
+    const resetViewButton = document.querySelector("#view-reset");
+    const fullscreenButton = document.querySelector("#view-fullscreen");
+    const viewStatus = document.querySelector("#view-status");
+    const CAMERA_RESET_MS = 900;
+    const initialView = {
+      framePosition: localFrame.position.clone(), frameRotation: localFrame.quaternion.clone(),
+      cameraPosition: camera.position.clone(), cameraRotation: camera.quaternion.clone()
+    };
+    let cameraReset = null;
+    function clearNavigationMotion() {
+      const pointerControls = controls.pointerControls;
+      for (const gesture of [pointerControls.rotating, pointerControls.sliding]) {
+        if (gesture && canvas.hasPointerCapture(gesture.pointerId)) canvas.releasePointerCapture(gesture.pointerId);
+      }
+      pointerControls.rotating = pointerControls.sliding = null;
+      pointerControls.dualPress = false;
+      pointerControls.lastUp = null;
+      pointerControls.moveVelocity.set(0, 0, 0);
+      pointerControls.rotateVelocity.set(0, 0, 0);
+      pointerControls.scroll.set(0, 0, 0);
+      controls.fpsMovement.keydown = {};
+      controls.fpsMovement.keycode = {};
+      controls.lastTime = performance.now();
+    }
+    function cancelCameraReset() {
+      if (!cameraReset) return;
+      cameraReset = null;
+      resetViewButton.disabled = renderer.xr.isPresenting;
+      controls.lastTime = performance.now();
+    }
+    resetViewButton.onclick = () => {
+      if (renderer.xr.isPresenting) return;
+      finishDrag();
+      selectSource(null);
+      clearNavigationMotion();
+      cameraReset = {
+        start: performance.now(),
+        duration: matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : CAMERA_RESET_MS,
+        framePosition: localFrame.position.clone(), frameRotation: localFrame.quaternion.clone(),
+        cameraPosition: camera.position.clone(), cameraRotation: camera.quaternion.clone()
+      };
+      resetViewButton.disabled = true;
+      wakeScene();
+    };
+    function updateCameraReset(now) {
+      if (!cameraReset) return false;
+      const progress = cameraReset.duration ? Math.min((now - cameraReset.start) / cameraReset.duration, 1) : 1;
+      const eased = progress * progress * (3 - 2 * progress);
+      localFrame.position.lerpVectors(cameraReset.framePosition, initialView.framePosition, eased);
+      localFrame.quaternion.slerpQuaternions(cameraReset.frameRotation, initialView.frameRotation, eased);
+      camera.position.lerpVectors(cameraReset.cameraPosition, initialView.cameraPosition, eased);
+      camera.quaternion.slerpQuaternions(cameraReset.cameraRotation, initialView.cameraRotation, eased);
+      controls.lastTime = now;
+      wakeScene();
+      if (progress === 1) {
+        cameraReset = null;
+        clearNavigationMotion();
+        resetViewButton.disabled = false;
+      }
+      return true;
+    }
+    // New navigation input takes over immediately, even partway through a reset.
+    document.addEventListener("keydown", event => {
+      if (event.code in controls.fpsMovement.keycodeMoveMapping ||
+          event.code in controls.fpsMovement.keycodeRotateMapping) cancelCameraReset();
+    }, true);
+    renderer.xr.addEventListener("sessionstart", () => {
+      cancelCameraReset();
+      resetViewButton.disabled = true;
+    });
+    renderer.xr.addEventListener("sessionend", () => { resetViewButton.disabled = false; });
+
+    const hideUiButton = document.querySelector("#view-hide-ui");
+    let uiHidden = false;
+    function toggleUi() {
+      uiHidden = !uiHidden;
+      document.body.classList.toggle("ui-hidden", uiHidden);
+      hideUiButton.setAttribute("aria-pressed", String(uiHidden));
+      hideUiButton.querySelector("span").textContent = uiHidden ? "Show UI" : "Hide UI";
+      hideUiButton.title = uiHidden ? "Show the interface (H)" : "Hide the interface (H)";
+      // Keep a reachable control focused instead of leaving focus in a hidden panel.
+      if (uiHidden) hideUiButton.focus({ preventScroll: true });
+    }
+    hideUiButton.onclick = toggleUi;
+    document.addEventListener("keydown", event => {
+      if (event.key?.toLowerCase() !== "h" || event.repeat || event.isComposing ||
+          event.ctrlKey || event.metaKey || event.altKey || event.defaultPrevented || deleteDialog.open) return;
+      const target = event.target;
+      if (target?.isContentEditable || target?.closest?.("input, textarea, select, [role='textbox']")) return;
+      event.preventDefault();
+      event.stopPropagation();
+      toggleUi();
+    }, true);
+    const fullscreenSupported = !!document.documentElement.requestFullscreen && !!document.fullscreenEnabled;
+    fullscreenButton.disabled = !fullscreenSupported;
+    if (!fullscreenSupported) fullscreenButton.title = "Fullscreen is unavailable in this browser";
+    fullscreenButton.onclick = async () => {
+      viewStatus.textContent = "";
+      fullscreenButton.disabled = true;
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else await document.documentElement.requestFullscreen();
+      } catch (error) {
+        viewStatus.textContent = "Could not change fullscreen: " + error.message;
+      } finally {
+        fullscreenButton.disabled = !fullscreenSupported;
+      }
+    };
+    document.addEventListener("fullscreenchange", () => {
+      const active = !!document.fullscreenElement;
+      fullscreenButton.querySelector("span").textContent = active ? "Exit fullscreen" : "Fullscreen";
+      fullscreenButton.setAttribute("aria-pressed", String(active));
+      fullscreenButton.title = active ? "Exit fullscreen (Esc)" : "Enter fullscreen";
+      onWindowResize();
+      wakeScene();
+    });
+
+    const xr = new SparkXr({ renderer, onMouseLeaveOpacity: 0.5 });
+    gui.add(spark, "lodSplatScale", 0.001, 3.0, 0.001);
+
+    renderer.setAnimationLoop(function animate() {
+      stats.begin();
+      const now = performance.now();
+      xr.updateControllers(camera);
+      if (!updateCameraReset(now)) {
+        if (!dragging && !deleteDialog.open) controls.update(localFrame, camera);
+        else controls.lastTime = now;
+      }
+
+      camera.getWorldDirection(frameCameraDirection);
+      camera.getWorldPosition(frameCameraPosition);
+      if (frameCameraPosition.distanceTo(lastPos) > 0.0001 || frameCameraDirection.dot(lastDir) < 0.9999) {
+        lastMoved = now;
+        renderEnabled = true;
+        lastPos.copy(frameCameraPosition);
+        lastDir.copy(frameCameraDirection);
+      }
+      if (now - lastMoved > RENDER_TIMEOUT_MS) renderEnabled = false;
+
+      if (renderEnabled) {
+        renderer.render(scene, camera);
+      }
+
+      updateSelectionHint();
+      stats.end();
+    });
+  </script>
+</body>
+
+</html>

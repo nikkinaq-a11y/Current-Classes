@@ -1,0 +1,30 @@
+{
+  "splats": [
+    {
+      "filename": "lab3-c.spz",
+      "transform": {
+        "translation": [
+          0,
+          3.722,
+          9.205
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "scale": 1
+      }
+    }
+  ],
+  "metadata": {
+    "exportTimestamp": "2026-10-04T21:44:03.753Z",
+    "spzExportVersion": 2
+  }
+}

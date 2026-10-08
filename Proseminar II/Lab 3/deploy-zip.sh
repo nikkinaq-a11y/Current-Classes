@@ -5,6 +5,8 @@ set -e
 LAB="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p "$LAB/deploy"
 cd "$LAB/scenes/$1"
+# The audio editor saves files readable only by the owner; the web server needs to read them.
+chmod a+r ./*
 rm -f "$LAB/deploy/$1.zip"
 zip -qr "$LAB/deploy/$1.zip" . -x "index.marble-original.html" -x "README.md" -x ".DS_Store"
 echo "Upload: $LAB/deploy/$1.zip"

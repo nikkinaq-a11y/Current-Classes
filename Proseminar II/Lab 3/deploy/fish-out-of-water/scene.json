@@ -1,0 +1,67 @@
+{
+  "splats": [
+    {
+      "filename": "rain-kissed-main-street-usa.spz",
+      "transform": {
+        "translation": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          -180,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": 6.07
+      }
+    },
+    {
+      "filename": "droid.spz",
+      "transform": {
+        "translation": [
+          -0.07,
+          -3.534,
+          1.152
+        ],
+        "rotation": [
+          -173.23271475186883,
+          17.823632563978926,
+          -178.7381930657393
+        ],
+        "quaternion": [
+          0.02,
+          0.986,
+          0.06,
+          0.154
+        ],
+        "scale": 0.749
+      }
+    }
+  ],
+  "metadata": {
+    "exportTimestamp": "2026-10-04T21:41:49.763Z",
+    "spzExportVersion": 3
+  },
+  "audio": [
+    {
+      "id": "adf860f5-a8ff-40af-a370-7cfaa4443268",
+      "filename": "audio-adf860f5-a8ff-40af-a370-7cfaa4443268.mp3",
+      "name": "Area Music1.mp3",
+      "position": [
+        -0.38589798493812055,
+        -1.8471838948759491,
+        0.28525604388774795
+      ],
+      "loop": true,
+      "volume": 0.86,
+      "color": 16750059
+    }
+  ]
+}

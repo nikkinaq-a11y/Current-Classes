@@ -1,0 +1,52 @@
+{
+  "splats": [
+    {
+      "filename": "rain-kissed-main-street-usa.spz",
+      "transform": {
+        "translation": [
+          -5.813,
+          5.637,
+          10.134
+        ],
+        "rotation": [
+          -180,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": 6.07
+      }
+    },
+    {
+      "filename": "droid.spz",
+      "transform": {
+        "translation": [
+          -5.883,
+          2.103,
+          11.286
+        ],
+        "rotation": [
+          -173.23271475186883,
+          17.823632563978926,
+          -178.7381930657393
+        ],
+        "quaternion": [
+          0.02,
+          0.986,
+          0.06,
+          0.154
+        ],
+        "scale": 0.749
+      }
+    }
+  ],
+  "metadata": {
+    "exportTimestamp": "2026-10-04T21:41:49.763Z",
+    "spzExportVersion": 3
+  }
+}

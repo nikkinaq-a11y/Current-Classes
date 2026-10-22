@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Melting Time</title>
+</head>
+<body>
+  <button id="use-location">Use my location</button>
+
+  <p>Or enter a location:</p>
+  <input
+    id="location-input"
+    placeholder="City, ZIP/postal code, IP, or latitude,longitude"
+  >
+  <button id="search">Calculate</button>
+
+  <p>Accepted: US ZIP code, UK postcode, Canadian postal code, IP address,
+    latitude/longitude, or city name.</p>
+
+  <p id="result"></p>
+
+  <script src="config.js"></script>
+  <script>
+    const apiKey = WEATHER_API_KEY;
+    const result = document.querySelector("#result");
+
+    async function calculateMeltingTime(location) {
+      result.textContent = "Getting weather...";
+
+      const url = new URL("https://api.weatherapi.com/v1/current.json");
+      url.searchParams.set("key", apiKey);
+      url.searchParams.set("q", location);
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!response.ok) {
+          result.textContent =
+            data.error?.message || "Could not find weather for this location.";
+          return;
+        }
+
+        const temperature = data.current.temp_c;
+        const minutes = Math.max(0, 30 + (30 - temperature));
+
+        result.textContent = `Melting time: ${minutes} min`;
+      } catch {
+        result.textContent = "Could not connect to the weather service.";
+      }
+    }
+
+    document.querySelector("#search").addEventListener("click", () => {
+      const location = document.querySelector("#location-input").value.trim();
+
+      if (!location) {
+        result.textContent = "Please enter a location.";
+        return;
+      }
+
+      calculateMeltingTime(location);
+    });
+
+    document.querySelector("#use-location").addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        result.textContent = "Your browser does not support location access.";
+        return;
+      }
+
+      result.textContent = "Waiting for location permission...";
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          calculateMeltingTime(`${latitude},${longitude}`);
+        },
+        () => {
+          result.textContent =
+            "Location access was not available. Please enter a location instead.";
+        }
+      );
+    });
+  </script>
+</body>
+</html>
